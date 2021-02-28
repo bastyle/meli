@@ -41,26 +41,54 @@ func (c1 Coordinate32) Trilaterate32(c2, c3 Coordinate32) (x, y float32) {
 }*/
 
 func GetLocation(distances ...float32) (x, y float32) {
-	fmt.Println("GetLocation", distances)
+	fmt.Println("GetLocation distances: ", distances)
 	var kenobi = Coordinate{
-		x: -3,
-		y: -2,
+		x: -3.0,
+		y: -2.0,
 		//d: 7.21,
 		d: float64(distances[0]),
 	}
 	var skywalker = Coordinate{
-		x: 2,
-		y: -2,
+		x: 2.0,
+		y: -2.0,
 		//d: 6.08,
 		d: float64(distances[1]),
 	}
 	var sato = Coordinate{
-		x: 3,
-		y: 3,
+		x: 3.0,
+		y: 3.0,
 		//d: 2.23,
 		d: float64(distances[2]),
 	}
-	imperioX, imperioY := kenobi.Trilaterate(skywalker, sato)
-	return float32(imperioX), float32(imperioY)
+	xFromKenobi, yFromKenobi := kenobi.Trilaterate(skywalker, sato)
+	xFromSkywalker, yFromSkywalker := skywalker.Trilaterate(sato, kenobi)
+	xFromSato, yFromSato := sato.Trilaterate(skywalker, kenobi)
+
+	//GetNotNanValue(xFromKenobi, xFromSato, xFromSkywalker)
+	//GetNotNanValue(yFromKenobi, yFromSato, yFromSkywalker)
+
+	//return float32(xFromKenobi), float32(yFromKenobi)
+	return GetNotNanValue(xFromKenobi, xFromSato, xFromSkywalker), GetNotNanValue(yFromKenobi, yFromSato, yFromSkywalker)
 	//return 1.0017699999999998, 3.9989959999999996
+}
+
+func GetNotNanValue(coordinateValues ...float64) float32 {
+	var finalCoor float32
+	var coorSum float64
+	var coorCount float64
+	for _, v := range coordinateValues {
+		//fmt.Println("coor", v)
+		if !math.IsNaN(v) && !math.IsInf(v, 0) {
+			coorCount += 1
+			coorSum += v
+		}
+	}
+	//fmt.Println("coorCount: ", coorCount)
+	//fmt.Println("coorSum: ", coorSum)
+	finalCoor = float32(coorSum / coorCount)
+	//finalCoor = float32(math.Round((coorSum / coorCount) * 100 / 100))
+	//fmt.Println("finalCoor: ", finalCoor)
+	//return float32(finalCoor / coorSum)
+	return finalCoor
+	//return math.Round(finalCoor*100) / 100
 }

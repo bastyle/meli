@@ -21,6 +21,7 @@ import (
 }*/
 
 func main() {
+
 	var arrayint = [...]int{1, 2, 3, 4, 5} //assign
 	fmt.Println(arrayint)
 
