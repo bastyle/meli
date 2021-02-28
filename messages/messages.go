@@ -1,6 +1,7 @@
 package messages
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -59,15 +60,15 @@ func GetMessage2(messages ...[]string) string {
 }
 
 //TODO agregar validacion para que el largo de todos los arreglos de los mensajes sea igual
-func ValidateMessagesLen(messages ...[]string) bool {
+func ValidateMessagesLen(messages ...[]string) (bool, error) {
 	var msgLen int
 	msgLen = len(messages[0])
 	//for counter, v := range messages {
 	for i := 1; i < len(messages); i++ {
 		if msgLen != len(messages[i]) {
-			fmt.Println("existe un arreglo con un largo diferente: ")
-			return false
+			//fmt.Println("existe un arreglo con un largo diferente: ")
+			return false, errors.New("la cantidad de palabras debe ser igual en todos los mensajes.")
 		}
 	}
-	return true
+	return true, nil
 }

@@ -5,11 +5,9 @@ import (
 	"os"
 
 	"meli.com/messages"
-
-	"errors"
 )
 
-func ValidateMessagesLenLocal(messages ...[]string) (bool, error) {
+/*func ValidateMessagesLenLocal(messages ...[]string) (bool, error) {
 	var msgLen int
 	msgLen = len(messages[0])
 	//for counter, v := range messages {
@@ -20,7 +18,7 @@ func ValidateMessagesLenLocal(messages ...[]string) (bool, error) {
 		}
 	}
 	return true, nil
-}
+}*/
 
 func main() {
 	var arrayint = [...]int{1, 2, 3, 4, 5} //assign
@@ -33,6 +31,7 @@ func main() {
 	kenobi_msg := [5]string{"este", "", "", "mensaje", ""}
 	//fmt.Println("kenobi_msg 1:: ", kenobi_msg[:])
 	skywalker_msg := [5]string{"", "es", "", "", "secreto"}
+	//sato_msg := [5]string{"este", "", "un", "", ""}
 	sato_msg := [6]string{"este", "", "un", "", "", ""}
 	arrayMessages := [][]string{kenobi_msg[:], skywalker_msg[:], sato_msg[:]}
 	fmt.Println("arrayMessages::::", arrayMessages)
@@ -45,11 +44,11 @@ func main() {
 		fmt.Println("finalMsg::: ", finalMsg)
 	} */
 
-	if _, err := ValidateMessagesLenLocal(kenobi_msg[:], skywalker_msg[:], sato_msg[:]); err != nil {
+	if _, err := messages.ValidateMessagesLen(kenobi_msg[:], skywalker_msg[:], sato_msg[:]); err != nil {
 		fmt.Println("Err::: ", err)
 	} else {
 		var finalMsg string = messages.GetMessage2(kenobi_msg[:], skywalker_msg[:], sato_msg[:])
 		fmt.Println("finalMsg::: ", finalMsg)
-		os.Exit(1)
+		os.Exit(3)
 	}
 }
