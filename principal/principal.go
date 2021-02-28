@@ -47,7 +47,7 @@ func main() {
 	if _, err := messages.ValidateMessagesLen(kenobi_msg[:], skywalker_msg[:], sato_msg[:]); err != nil {
 		fmt.Println("Err::: ", err)
 	} else {
-		var finalMsg string = messages.GetMessage2(kenobi_msg[:], skywalker_msg[:], sato_msg[:])
+		var finalMsg string = messages.GetMessage(kenobi_msg[:], skywalker_msg[:], sato_msg[:])
 		fmt.Println("finalMsg::: ", finalMsg)
 		os.Exit(3)
 	}

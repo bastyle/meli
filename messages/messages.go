@@ -22,15 +22,15 @@ func Hello(name string) string {
 }
 
 //func GetMessage(messages [PartsOfMessage]string) string {
-func GetMessage(messages []string) string {
+func GetMessageIni(messages []string) string {
 	fmt.Println("GetMessage....", messages)
 	//fmt.Println(messages)
 	//message := fmt.Sprintf("Hi, %v. Welcome!", name)
 	return messages[0]
 }
 
-func GetMessage2(messages ...[]string) string {
-	fmt.Println(":::: GetMessage2 ::::", messages, "cantidad de arreglos: ", len(messages))
+func GetMessage(messages ...[]string) string {
+	//fmt.Println(":::: GetMessage2 ::::", messages, "cantidad de arreglos: ", len(messages))
 	var finalMsg []string
 	for counter, v := range messages {
 		//fmt.Println("counter: ", counter)
@@ -41,7 +41,7 @@ func GetMessage2(messages ...[]string) string {
 		//fmt.Println("finalMsg len: ", len(finalMsg))
 		//fmt.Println("finalMsg: ", finalMsg)
 
-		fmt.Println("arreglo de entrada: ", v, "largo: ", len(v))
+		//fmt.Println("arreglo de entrada: ", v, "largo: ", len(v))
 		//fmt.Println("largo: ", len(v))
 		//fmt.Println(v, "--", reflect.ValueOf(v).Kind())
 		//for i, m := range v {
@@ -52,7 +52,7 @@ func GetMessage2(messages ...[]string) string {
 				finalMsg[i] = v[i]
 			}
 		}
-		fmt.Println("finalMsg: ", finalMsg)
+		//fmt.Println("finalMsg: ", finalMsg)
 	}
 	//return messages[0][0]
 	//return finalMsg[0]
