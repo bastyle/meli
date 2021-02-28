@@ -10,6 +10,7 @@ var sato_msg = [5]string{"este", "", "un", "", ""}
 var kenobi_msg_6 = [6]string{"este", "", "", "mensaje", "", ""}
 
 func TestMsgLen(t *testing.T) {
+	t.Log("TestMsgLen...")
 	if valid, err := ValidateMessagesLen(kenobi_msg_6[:], skywalker_msg[:], sato_msg[:]); err == nil {
 		t.Errorf("Expected: %v, got: %v", false, valid)
 		t.Errorf("Se esperaba ser invalido debido al largo de uno de los mensajes.")

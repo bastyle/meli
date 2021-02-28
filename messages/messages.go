@@ -59,7 +59,6 @@ func GetMessage2(messages ...[]string) string {
 	return strings.Join(finalMsg[:], " ")
 }
 
-//TODO agregar validacion para que el largo de todos los arreglos de los mensajes sea igual
 func ValidateMessagesLen(messages ...[]string) (bool, error) {
 	var msgLen int
 	msgLen = len(messages[0])
