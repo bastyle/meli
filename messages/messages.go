@@ -20,8 +20,8 @@ func GetMessage(messages ...[]string) string {
 			finalMsg = v[:]
 		}
 		for i := 0; i < len(v); i++ {
-			if finalMsg[i] == "" {
-				finalMsg[i] = v[i]
+			if strings.TrimSpace(finalMsg[i]) == "" {
+				finalMsg[i] = strings.TrimSpace(v[i])
 			}
 		}
 	}
