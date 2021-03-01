@@ -4,7 +4,7 @@ Resources:
   People:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handler/trilateration
+      Handler: dist/handler/messages
       Runtime: go1.x
       Tracing: Active
       Events:

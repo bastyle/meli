@@ -1,8 +1,12 @@
 package messages
 
 import (
+	"encoding/json"
 	"errors"
 	"strings"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
 // sattelitesMsgs messages struct
@@ -38,4 +42,28 @@ func ValidateMessagesLen(messages ...[]string) (bool, error) {
 		}
 	}
 	return true, nil
+}
+
+/********aws*******/
+type Message struct {
+	Name string
+	Body string
+	age  int
+}
+
+func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	//body, err := json.Marshal("{'list':'lista'}")
+	body, err := json.Marshal(getMessage())
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON", StatusCode: 500}, nil
+	}
+	return events.APIGatewayProxyResponse{Body: string(body), StatusCode: 200}, nil
+}
+
+func getMessage() Message {
+	return Message{"Alice", "Hello", 37}
+}
+
+func main() {
+	lambda.Start(handleRequest)
 }
