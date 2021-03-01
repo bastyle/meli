@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var a = Coordinate{
+/*var a = Coordinate{
 	x: -3,
 	y: -2,
 	d: 7.21,
@@ -40,7 +40,7 @@ func TestGetLocation(t *testing.T) {
 	//fmt.Println(GetLocation(7.21, 6.08, 2.23))
 	fmt.Printf("x: %.1f y: %.1f \n", x, y)
 }
-
+*/
 func TestGetLocation2(t *testing.T) {
 	fmt.Println("TestGetLocation2")
 	//ejemplo graficamente real para punto D -100,400

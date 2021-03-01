@@ -5,12 +5,12 @@ import (
 	"math"
 )
 
-type Coordinate struct {
+/*type Coordinate struct {
 	x    float64
 	y    float64
 	d    float64
 	uuid string
-}
+}*/
 
 type Satellite struct {
 	x    float64
@@ -44,7 +44,7 @@ func Hello(name string) string {
 	return message
 }
 
-func (c1 Coordinate) Trilaterate(c2, c3 Coordinate) (x, y float64) {
+/*func (c1 Coordinate) Trilaterate(c2, c3 Coordinate) (x, y float64) {
 	return Trilaterate(c1, c2, c3)
 }
 
@@ -80,7 +80,7 @@ func GetLocation(distances ...float32) (x, y float32) {
 	xFromSato, yFromSato := sato.Trilaterate(skywalker, kenobi)
 
 	return GetAvgCoorValue(xFromKenobi, xFromSato, xFromSkywalker), GetAvgCoorValue(yFromKenobi, yFromSato, yFromSkywalker)
-}
+}*/
 
 func GetAvgCoorValue(coordinateValues ...float64) float32 {
 	var finalCoor float32
