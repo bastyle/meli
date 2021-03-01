@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// TestGetLocation test of a graphically real example
 func TestGetLocation(t *testing.T) {
 	fmt.Println("TestGetLocation")
 	//ejemplo graficamente real para punto D -100,400
@@ -26,6 +27,7 @@ func TestGetLocation(t *testing.T) {
 
 }
 
+// TestAvgCoorValue percentage test of 3 values where one is nan
 func TestAvgCoorValue(t *testing.T) {
 	if x := GetAvgCoorValue(1.0017699999999998, 3.9989959999999996, math.NaN()); x != float32(2.500383) {
 		t.Errorf("TestAvgCoorValue FAILED: Expected x = 2.5 and got x=%f", x)
