@@ -1,6 +1,7 @@
 package trilateration
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
 	"reflect"
@@ -45,6 +46,20 @@ func TestType(t *testing.T) {
 	}
 }
 
+type Message struct {
+	Name string
+	Body string
+	age  int
+}
+
 func TestHello(t *testing.T) {
-	fmt.Println(Hello("Bastian"))
+	//fmt.Println(Hello("Bastian"))
+	m := Message{"Alice", "Hello", 34}
+	body, err := json.Marshal(m)
+	if err != nil {
+		fmt.Println("err:", err)
+	} else {
+		fmt.Println("Bastian", body)
+	}
+
 }
