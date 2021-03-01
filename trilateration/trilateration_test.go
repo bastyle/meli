@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"reflect"
+	"strconv"
 	"testing"
 )
 
@@ -40,6 +41,24 @@ func TestGetLocation(t *testing.T) {
 	fmt.Printf("x: %.1f y: %.1f \n", x, y)
 }
 
+func TestGetLocation2(t *testing.T) {
+	fmt.Println("TestGetLocation2")
+	//ejemplo graficamente real para punto D -100,400
+	x, y := GetLocation2(721.11, 538.51, 670.82)
+	fmt.Printf("x: %.1f y: %.1f \n", x, y)
+	if auxX, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", x), 32); auxX != -100 {
+		t.Errorf("TestGetLocation FAILED: Expected x = -100 && y = 400 and got x=%.2f", auxX)
+	} else {
+		t.Log("TestGetLocation X validation PASSED")
+	}
+	if auxY, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", y), 32); auxY != 400 {
+		t.Errorf("TestGetLocation FAILED: Expected y = 400 and got y=%.2f", auxY)
+	} else {
+		t.Log("TestGetLocation Y validation PASSED")
+	}
+
+}
+
 /*******challa********/
 
 func TestType(t *testing.T) {
@@ -52,7 +71,7 @@ func TestType(t *testing.T) {
 }
 
 func TestReadCoorValues(t *testing.T) {
-	x := GetNotNanValue(1.0017699999999998, 3.9989959999999996, math.NaN())
+	x := GetAvgCoorValue(1.0017699999999998, 3.9989959999999996, math.NaN())
 	fmt.Println(fmt.Sprintf("%.2f", x))
 
 }
