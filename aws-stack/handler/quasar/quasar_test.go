@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"testing"
 )
 
@@ -16,4 +18,25 @@ func TestExampleMessage(t *testing.T) {
 	} else {
 		t.Log("TestExpectedMsg PASSED")
 	}
+}
+
+func TestJsonRequest(t *testing.T) {
+	t.Log("TestJsonRequest ...")
+	body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
+	t.Log("TestJsonRequest body: ", body)
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		t.Errorf("FAILED: %v", err)
+	} else {
+		t.Log("TestJsonRequest PASSED. body: ", string(jsonBody))
+	}
+	//bodyJSON := make(map[string][]RequestBody)
+	bodyJSON := RequestBody{}
+	err1 := json.Unmarshal([]byte(body), &bodyJSON)
+	if err1 != nil {
+		panic(err1)
+	}
+	fmt.Printf("\n\n json object:::: %+v", bodyJSON)
+	//fmt.Printf("\n\n json object:::: %+v", bodyJSON.satellites[0].Name)
+	fmt.Printf("\n\n json object:::: %+v", bodyJSON.Satellites[0].Name)
 }
