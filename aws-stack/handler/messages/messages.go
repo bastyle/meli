@@ -52,7 +52,7 @@ type Message struct {
 }
 
 type Response struct {
-	Message string
+	Message string `json:"message"`
 }
 
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
