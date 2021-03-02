@@ -10,16 +10,7 @@ var sato_msg = [5]string{"este", "", "un", "", ""}
 var kenobi_msg_6 = [6]string{"este", "", "", "mensaje", "", ""}
 var expectedMsg = "este es un mensaje secreto"
 
-func TestMsg(t *testing.T) {
-	if msg := getMessage(); (Message{}) != msg {
-		t.Log("TestExpectedMsg PASSED")
-	} else {
-		t.Error("FAILED.")
-	}
-}
-
-func TestExpectedMsg(t *testing.T) {
-	//if msg := GetMessage(kenobi_msg[:], skywalker_msg[:], sato_msg[:]); msg != expectedMsg {
+func TestExampleMessage(t *testing.T) {
 	if msg := GetExampleMessage(); msg.Message != expectedMsg {
 		t.Errorf("FAILED: Expected: %v, got: %v", expectedMsg, msg)
 	} else {
