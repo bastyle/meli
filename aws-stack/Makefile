@@ -21,7 +21,7 @@ install-dev:
 		go get github.com/awslabs/aws-sam-local
 
 test:
-		go test ./... --cover
+		go test -v ./... --cover
 
 configure:
 		aws s3api create-bucket \
