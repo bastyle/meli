@@ -13,7 +13,18 @@ Resources:
           Properties:
             Path: /getMessage
             Method: get
- 
+  Quasar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handler/quasar
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret
+            Method: post
 Outputs:
   URL:
     Description: URL for HTTPS Endpoint
