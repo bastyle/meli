@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -16,16 +17,6 @@ type Response struct {
 	Message string `json:"message"`
 }
 
-/*type Satellite struct {
-	Nombre   string   `json:"nombre"`
-	Distance float32  `json:"distance"`
-	Message  []string `json:"message"`
-}
-
-type RequestBody struct {
-	Satellites []Satellite `json:"satellites"`
-}*/
-
 type RequestBody struct {
 	Satellites []struct {
 		Name     string   `json:"name"`
@@ -34,13 +25,13 @@ type RequestBody struct {
 	} `json:"satellites"`
 }
 
-/*func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	body, err := json.Marshal(GetExampleMessage())
-	if err != nil {
-		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON", StatusCode: 500}, nil
-	}
-	return events.APIGatewayProxyResponse{Body: string(body), StatusCode: 200}, nil
-}*/
+type ResponseBody struct {
+	Position struct {
+		X float64 `json:"x"`
+		Y float64 `json:"y"`
+	} `json:"position"`
+	Message string `json:"message"`
+}
 
 /*func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	jsonBody, err := json.Marshal(req)
@@ -54,24 +45,32 @@ type RequestBody struct {
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("request.Body = %v.\n", req.Body)
 	fmt.Printf("request.Body size = %d.\n", len(req.Body))
-	//reqBodyStruct := RequestBody{}
-	reqBodyStruct := new(RequestBody)
+	// request reading
+	//reqBodyStruct := new(RequestBody)
+	reqBodyStruct := RequestBody{}
 	err := json.Unmarshal([]byte(req.Body), reqBodyStruct)
-	//acá
 	if err != nil {
-		fmt.Printf("Error unMarshal req.Body= %v.\n", err)
+		fmt.Printf("Error Unmarshal req.Body= %v.\n", err)
 		return events.APIGatewayProxyResponse{Body: "Unable to unmarshal JSON req.body ", StatusCode: 500}, nil
-	} else {
+	} /*else {
 		fmt.Printf("reqBodyStruct.Satellites[0].Name = %v.\n", reqBodyStruct.Satellites[0].Name)
-		reqBodyStruct.Satellites[0].Name = "Prueba"
-		fmt.Printf("reqBodyStruct.Satellites[0].Name = %v.\n", reqBodyStruct.Satellites[0].Name)
-	}
-	if jsonResBody, err := json.Marshal(reqBodyStruct); err != nil {
-		fmt.Printf("Error marshal reqBodyStruct= %v.\n", err)
-		return events.APIGatewayProxyResponse{Body: "Error transformando response body a objeto JSON", StatusCode: 500}, nil
+		//resp := ResponseBody{Message: GetSecretMessage(reqBodyStruct)}
+	}*/
+	// preparación de respuesta (transformacion)
+
+	if jsonStrResp, err := ProcessRequest(reqBodyStruct); err != nil {
+		fmt.Printf("Error ProcessRequest = %v.\n", err)
+		return events.APIGatewayProxyResponse{Body: "Error procesando mensaje.", StatusCode: 500}, nil
 	} else {
-		fmt.Printf("transformacion de response ok %v: .\n", err)
-		return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
+		fmt.Printf("jsonStrResp: %v.\n", jsonStrResp)
+		// response
+		if jsonResBody, err := json.Marshal(jsonStrResp); err != nil {
+			fmt.Printf("Error marshal jsonStrResp= %v.\n", err)
+			return events.APIGatewayProxyResponse{Body: "Error transformando response body a objeto JSON", StatusCode: 500}, nil
+		} else {
+			fmt.Printf("jsonStrResp %v: .\n", jsonStrResp)
+			return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
+		}
 	}
 }
 
@@ -109,6 +108,41 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	}
 	return events.APIGatewayProxyResponse{Body: request.Body, StatusCode: 200}, nil
 }*/
+
+//funcion encargada de procesar la petición
+func ProcessRequest(reqBodyStruct RequestBody) (ResponseBody, error) {
+	resBodyStruct := ResponseBody{}
+	if msgResp, err := GetSecretMessage(reqBodyStruct); err != nil {
+		return resBodyStruct, err
+	} else {
+		resBodyStruct.Message = msgResp
+		return resBodyStruct, nil
+	}
+}
+
+func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
+	//validar que el objeto tenga 3 satellites
+	if len(reqBodyStruct.Satellites) != 3 {
+		//fmt.Errorf("")
+		return "", errors.New("3 satellites are expected")
+	} else {
+		//crear un arreglo de arreglos para enviar
+		//var satellitesMessages [3][]string{}
+		fmt.Printf("msg_1: %v.\n", reqBodyStruct.Satellites[0].Message[:])
+		if _, err := ValidateMessagesLen(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:]); err != nil {
+			//error en largo de mensajes
+			fmt.Printf("error:::: %v", err)
+			return "", err
+		} else {
+			fmt.Printf("validacion 1 ok %v.\n", err)
+			resp := ResponseBody{Message: GetMessage(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:])}
+
+			fmt.Printf("message %v.\n", resp.Message)
+			return resp.Message, nil
+		}
+	}
+
+}
 
 func GetExampleMessage() MockResponse {
 	var kenobi_msg = [5]string{"este", "", "", "mensaje", ""}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"testing"
 )
 
@@ -21,36 +20,42 @@ func TestExampleMessage(t *testing.T) {
 }
 
 func TestJsonRequest(t *testing.T) {
-	t.Log("TestJsonRequest ...")
-	//body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
-	body := `"{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}"`
-
-	if last := len(body) - 1; last >= 0 && body[last] == '"' {
-		body = body[:last]
-	}
-	if len(body) >= 0 && body[0] == '"' {
-		body = body[1:]
-	}
-
+	t.Log("TestJsonRequest ...........")
+	body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
 	t.Log("TestJsonRequest body: ", body)
-	jsonBody, err := json.Marshal(body)
+	//reqBodyStruct := new(RequestBody)
+	reqBodyStruct := RequestBody{}
+	err := json.Unmarshal([]byte(body), &reqBodyStruct)
 	if err != nil {
-		t.Errorf("FAILED: %v", err)
+		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
 	} else {
-		t.Log("TestJsonRequest PASSED. body: ", jsonBody, "err: ", err)
+		t.Log("reqBodyStruct.Satellites[0].Name :", reqBodyStruct.Satellites[0].Name)
+		if jsonStrResp, err := GetSecretMessage(reqBodyStruct); err != nil {
+			t.Errorf("Error getting satellites message= %v.\n", err)
+		} else {
+			t.Log("jsonStrResp: ", jsonStrResp)
+		}
 	}
-	//bodyJSON := make(map[string][]RequestBody)
-	bodyJSON := RequestBody{}
-	err1 := json.Unmarshal([]byte(body), &bodyJSON)
-	if err1 != nil {
-		panic(err1)
-	}
-	//fmt.Printf("\n\n json object:::: %+v", bodyJSON)
-	//fmt.Printf("\n\n json object:::: %+v", bodyJSON.satellites[0].Name)
-	fmt.Printf("\n\n json object:::: %+v", bodyJSON.Satellites[0].Name)
 }
 
-func TestByteStr(t *testing.T) {
+func TestProcessRequest(t *testing.T) {
+	t.Log("TestProcessRequest ...........")
+	body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
+	reqBodyStruct := RequestBody{}
+	err := json.Unmarshal([]byte(body), &reqBodyStruct)
+	if err != nil {
+		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
+	} else {
+		t.Log("reqBodyStruct.Satellites[0].Name :", reqBodyStruct.Satellites[0].Name)
+		if jsonStrResp, err := ProcessRequest(reqBodyStruct); err != nil {
+			t.Errorf("Error ProcessRequest = %v.\n", err)
+		} else {
+			t.Log("jsonStrResp: ", jsonStrResp)
+		}
+	}
+}
+
+/*func TestByteStr(t *testing.T) {
 	b := []byte{34, 65, 66, 67, 226, 130, 172, 34}
 	fmt.Printf("b: %v \n", b)
 	s := string(b)
@@ -60,7 +65,7 @@ func TestByteStr(t *testing.T) {
 	}
 	fmt.Printf("b: %v \n", b)
 	fmt.Printf("str: %v \n", s)
-}
+}*/
 
 /*func TrimSuffix(s, suffix string) string {
     if strings.HasSuffix(s, suffix) {
