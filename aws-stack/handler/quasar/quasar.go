@@ -59,7 +59,7 @@ func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON", StatusCode: 500}, nil
 	} else {
-		fmt.Printf("jsonBody: %v", jsonBody)
+		fmt.Printf("reqJsonBody: %v.\n", string(jsonBody))
 	}
 	/*fmt.Println("Headers:")
 	for key, value := range request.Headers {
@@ -68,8 +68,7 @@ func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	reqBodyStruct := RequestBody{}
 	err1 := json.Unmarshal([]byte(jsonBody), &reqBodyStruct)
 	if err1 != nil {
-		fmt.Println("error::::::: ")
-		fmt.Println(err)
+		fmt.Printf("err: %v .\n", err1)
 		return events.APIGatewayProxyResponse{Body: "Error transformando request body a JSON" + string(jsonBody), StatusCode: 500}, nil
 	}
 	reqBodyStruct.Satellites[0].Name = "Prueba"

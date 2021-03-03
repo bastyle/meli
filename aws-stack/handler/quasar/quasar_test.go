@@ -23,12 +23,13 @@ func TestExampleMessage(t *testing.T) {
 func TestJsonRequest(t *testing.T) {
 	t.Log("TestJsonRequest ...")
 	body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
+	//body := `"{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}"`
 	t.Log("TestJsonRequest body: ", body)
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
 		t.Errorf("FAILED: %v", err)
 	} else {
-		t.Log("TestJsonRequest PASSED. body: ", jsonBody)
+		t.Log("TestJsonRequest PASSED. body: ", jsonBody, "err: ", err)
 	}
 	//bodyJSON := make(map[string][]RequestBody)
 	bodyJSON := RequestBody{}
