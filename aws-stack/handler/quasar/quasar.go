@@ -61,13 +61,15 @@ func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	} else {
 		fmt.Printf("jsonBody: %v", jsonBody)
 	}
-	fmt.Println("Headers:")
+	/*fmt.Println("Headers:")
 	for key, value := range request.Headers {
 		fmt.Printf("    %s: %s\n", key, value)
-	}
-	/*reqBodyStruct := RequestBody{}
+	}*/
+	reqBodyStruct := RequestBody{}
 	err1 := json.Unmarshal([]byte(jsonBody), &reqBodyStruct)
 	if err1 != nil {
+		fmt.Println("error::::::: ")
+		fmt.Println(err)
 		return events.APIGatewayProxyResponse{Body: "Error transformando request body a JSON" + string(jsonBody), StatusCode: 500}, nil
 	}
 	reqBodyStruct.Satellites[0].Name = "Prueba"
@@ -75,7 +77,7 @@ func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 		return events.APIGatewayProxyResponse{Body: "Error transformando body a objeto JSON", StatusCode: 500}, nil
 	} else {
 		return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
-	}*/
+	}
 
 	//return events.APIGatewayProxyResponse{Body: jsonBody, StatusCode: 200}, nil
 
