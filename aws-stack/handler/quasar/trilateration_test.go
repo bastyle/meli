@@ -15,15 +15,10 @@ func TestGetLocation(t *testing.T) {
 	fmt.Printf("x: %.1f y: %.1f \n", x, y)
 	if auxX, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", x), 32); auxX != -100 {
 		t.Errorf("TestGetLocation FAILED: Expected x = -100 and got x=%.2f", auxX)
-	} else {
-		t.Log("TestGetLocation X validation PASSED")
 	}
 	if auxY, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", y), 32); auxY != 400 {
 		t.Errorf("TestGetLocation FAILED: Expected y = 400 and got y=%.2f", auxY)
-	} else {
-		t.Log("TestGetLocation Y validation PASSED")
 	}
-
 }
 
 // TestAvgCoorValue percentage test of 3 values where one is nan

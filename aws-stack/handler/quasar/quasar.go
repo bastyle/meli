@@ -29,14 +29,12 @@ type ResponseBody struct {
 	Message string `json:"message"`
 }
 
+// function that receives the event triggered in aws.
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("request.Body = %v.\n", req.Body)
 	fmt.Printf("request.Body size = %d.\n", len(req.Body))
 	fmt.Printf("path = %v.\n", req.Path)
 	fmt.Printf("method = %v.\n", req.HTTPMethod)
-
-	// request reading
-	//reqBodyStruct := new(RequestBody)
 	reqBodyStruct := RequestBody{}
 	err := json.Unmarshal([]byte(req.Body), &reqBodyStruct)
 	if err != nil {
@@ -48,12 +46,10 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 		fmt.Printf("Error ProcessRequest = %v.\n", err)
 		//return events.APIGatewayProxyResponse{Body: "Error procesando mensaje.", StatusCode: 500}, nil
 		return events.APIGatewayProxyResponse{StatusCode: 404}, nil
-	} else {
+	} else { // response
 		fmt.Printf("responseBody: %v.\n", responseBody)
-		// response
 		if jsonResBody, err := json.Marshal(responseBody); err != nil {
 			fmt.Printf("Error marshal responseBody= %v.\n", err)
-			//return events.APIGatewayProxyResponse{Body: "Error transformando response body a objeto JSON", StatusCode: 500}, nil
 			return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 		} else {
 			fmt.Printf("jsonResBody %v: .\n", jsonResBody)
@@ -62,7 +58,7 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	}
 }
 
-//funcion encargada de procesar la petición
+//this function is in charge of process the request.
 func ProcessRequest(reqBodyStruct RequestBody) (ResponseBody, error) {
 	resBodyStruct := ResponseBody{}
 	if len(reqBodyStruct.Satellites) != 3 {
@@ -83,6 +79,7 @@ func ProcessRequest(reqBodyStruct RequestBody) (ResponseBody, error) {
 	}
 }
 
+//this function is a wrapper to get position.
 func GetPosition(reqBodyStruct RequestBody) (float32, float32, error) {
 	kenobiDistance := reqBodyStruct.Satellites[0].Distance
 	skywalkerDistance := reqBodyStruct.Satellites[1].Distance
@@ -99,20 +96,21 @@ func GetPosition(reqBodyStruct RequestBody) (float32, float32, error) {
 	}
 }
 
+//this function is a wrapper to get secret message.
 func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
-	fmt.Printf("msg_1: %v.\n", reqBodyStruct.Satellites[0].Message[:])
+	//fmt.Printf("msg_1: %v.\n", reqBodyStruct.Satellites[0].Message[:])
 	if _, err := ValidateMessagesLen(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:]); err != nil {
-		//error en largo de mensajes
 		fmt.Printf("error:::: %v.\n", err)
 		return "", err
 	} else {
 		resp := ResponseBody{Message: GetMessage(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:])}
-		fmt.Printf("message %v.\n", resp.Message)
+		fmt.Printf("secret message obtained: %v.\n", resp.Message)
 		return resp.Message, nil
 	}
 
 }
 
+//this function is an example msg.
 func GetExampleMessage() MockResponse {
 	var kenobi_msg = [5]string{"este", "", "", "mensaje", ""}
 	var skywalker_msg = [5]string{"", "es", "", "", "secreto"}
@@ -120,6 +118,7 @@ func GetExampleMessage() MockResponse {
 	return MockResponse{Message: GetMessage(kenobi_msg[:], skywalker_msg[:], sato_msg[:])}
 }
 
+// the main function
 func main() {
 	lambda.Start(handleRequest)
 }

@@ -75,16 +75,3 @@ func GetLocation(distances ...float32) (x, y float32) {
 
 	return GetAvgCoorValue(xFromKenobi, xFromSato, xFromSkywalker), GetAvgCoorValue(yFromKenobi, yFromSato, yFromSkywalker)
 }
-
-//TODO
-func SetSatellites(satellites ...[]Satellite) {
-	//recorrer arreglo
-	//swictch sobre el nombre par aluego asignar valores
-	fmt.Println("SetSatellites: ")
-}
-
-func GetSato() {
-	fmt.Println("getsato: ", satoSat.x)
-	satoSat.x = 3000
-	fmt.Println("getsato: ", satoSat.x)
-}
