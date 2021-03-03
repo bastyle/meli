@@ -58,6 +58,8 @@ func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	jsonBody, err := json.Marshal(request.Body)
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON", StatusCode: 500}, nil
+	} else {
+		fmt.Printf("jsonBody: %v", jsonBody)
 	}
 	fmt.Println("Headers:")
 	for key, value := range request.Headers {
