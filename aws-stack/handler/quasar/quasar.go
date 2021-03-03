@@ -44,19 +44,19 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 		return events.APIGatewayProxyResponse{Body: "Unable to unmarshal JSON req.body ", StatusCode: 500}, nil
 	}
 	// preparación de respuesta (transformacion)
-	if jsonStrResp, err := ProcessRequest(reqBodyStruct); err != nil {
+	if responseBody, err := ProcessRequest(reqBodyStruct); err != nil {
 		fmt.Printf("Error ProcessRequest = %v.\n", err)
 		//return events.APIGatewayProxyResponse{Body: "Error procesando mensaje.", StatusCode: 500}, nil
 		return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 	} else {
-		fmt.Printf("jsonStrResp: %v.\n", jsonStrResp)
+		fmt.Printf("responseBody: %v.\n", responseBody)
 		// response
-		if jsonResBody, err := json.Marshal(jsonStrResp); err != nil {
-			fmt.Printf("Error marshal jsonStrResp= %v.\n", err)
+		if jsonResBody, err := json.Marshal(responseBody); err != nil {
+			fmt.Printf("Error marshal responseBody= %v.\n", err)
 			//return events.APIGatewayProxyResponse{Body: "Error transformando response body a objeto JSON", StatusCode: 500}, nil
 			return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 		} else {
-			fmt.Printf("jsonStrResp %v: .\n", jsonStrResp)
+			fmt.Printf("jsonResBody %v: .\n", jsonResBody)
 			return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
 		}
 	}
@@ -68,13 +68,18 @@ func ProcessRequest(reqBodyStruct RequestBody) (ResponseBody, error) {
 	if len(reqBodyStruct.Satellites) != 3 {
 		return resBodyStruct, errors.New("3 satellites are expected")
 	} else {
-		if msgResp, err := GetSecretMessage(reqBodyStruct); err != nil {
-			return resBodyStruct, err
+		if secretMsg, err := GetSecretMessage(reqBodyStruct); err != nil {
+			return ResponseBody{}, err
 		} else {
-			resBodyStruct.Message = msgResp
+			resBodyStruct.Message = secretMsg
+		}
+		if x, y, err := GetPosition(reqBodyStruct); err != nil {
+			return ResponseBody{}, err
+		} else {
+			resBodyStruct.Position.X = x
+			resBodyStruct.Position.Y = y
 			return resBodyStruct, nil
 		}
-		//agregar llamada a obtener position
 	}
 }
 
@@ -89,7 +94,7 @@ func GetPosition(reqBodyStruct RequestBody) (float32, float32, error) {
 	if x, y := GetLocation(kenobiDistance, skywalkerDistance, satoDistance); &x == nil || &y == nil {
 		return x, y, errors.New("Error calculating position")
 	} else {
-		fmt.Printf("x: %v  y: %v", x, y)
+		fmt.Printf("x: %v  y: %v.\n", x, y)
 		return x, y, nil
 	}
 }
@@ -101,7 +106,6 @@ func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
 		fmt.Printf("error:::: %v.\n", err)
 		return "", err
 	} else {
-		fmt.Printf("validacion 1 ok %v.\n", err)
 		resp := ResponseBody{Message: GetMessage(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:])}
 		fmt.Printf("message %v.\n", resp.Message)
 		return resp.Message, nil

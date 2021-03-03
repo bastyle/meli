@@ -46,10 +46,10 @@ func TestProcessRequest(t *testing.T) {
 		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
 	} else {
 		t.Log("reqBodyStruct.Satellites[0].Name :", reqBodyStruct.Satellites[0].Name)
-		if jsonStrResp, err := ProcessRequest(reqBodyStruct); err != nil {
+		if resBodyStruct, err := ProcessRequest(reqBodyStruct); err != nil {
 			t.Errorf("Error ProcessRequest = %v.\n", err)
 		} else {
-			t.Log("jsonStrResp: ", jsonStrResp)
+			t.Log("resBodyStruct: ", resBodyStruct)
 		}
 	}
 }
