@@ -63,22 +63,21 @@ func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (
 	for key, value := range request.Headers {
 		fmt.Printf("    %s: %s\n", key, value)
 	}
-	reqBodyStruct := RequestBody{}
-	//err1 := json.Unmarshal([]byte(request.Body), &reqBodyStruct)
+	/*reqBodyStruct := RequestBody{}
 	err1 := json.Unmarshal([]byte(jsonBody), &reqBodyStruct)
 	if err1 != nil {
-		return events.APIGatewayProxyResponse{Body: "Error transformando request body a JSON", StatusCode: 500}, nil
+		return events.APIGatewayProxyResponse{Body: "Error transformando request body a JSON" + string(jsonBody), StatusCode: 500}, nil
 	}
 	reqBodyStruct.Satellites[0].Name = "Prueba"
 	if jsonResBody, err := json.Marshal(reqBodyStruct); err != nil {
 		return events.APIGatewayProxyResponse{Body: "Error transformando body a objeto JSON", StatusCode: 500}, nil
 	} else {
 		return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
-	}
+	}*/
 
 	//return events.APIGatewayProxyResponse{Body: jsonBody, StatusCode: 200}, nil
 
-	//return events.APIGatewayProxyResponse{Body: request.Body, StatusCode: 200}, nil
+	return events.APIGatewayProxyResponse{Body: request.Body, StatusCode: 200}, nil
 }
 
 func GetExampleMessage() MockResponse {
