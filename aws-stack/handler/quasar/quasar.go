@@ -48,7 +48,7 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	// request reading
 	//reqBodyStruct := new(RequestBody)
 	reqBodyStruct := RequestBody{}
-	err := json.Unmarshal([]byte(req.Body), reqBodyStruct)
+	err := json.Unmarshal([]byte(req.Body), &reqBodyStruct)
 	if err != nil {
 		fmt.Printf("Error Unmarshal req.Body= %v.\n", err)
 		return events.APIGatewayProxyResponse{Body: "Unable to unmarshal JSON req.body ", StatusCode: 500}, nil
