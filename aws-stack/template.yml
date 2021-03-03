@@ -1,17 +1,17 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Resources:
-  People:
+  TopSecretSplit:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: dist/handler/messages
+      Handler: dist/handler/top-secret-split
       Runtime: go1.x
       Tracing: Active
       Events:
         GetEvent:
           Type: Api
           Properties:
-            Path: /getMessage
+            Path: /topsecret_split
             Method: get
   Quasar:
     Type: AWS::Serverless::Function

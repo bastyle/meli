@@ -29,6 +29,18 @@ type ResponseBody struct {
 	Message string `json:"message"`
 }
 
+/*func routeRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Printf("router = %v.\n", req)
+	if "/topsecret" == req.Path {
+
+	} else if "/topsecret_split" == req.Path && "POST" == req.HTTPMethod {
+
+	} else if "/topsecret_split" == req.Path && "GET" == req.HTTPMethod {
+
+	}
+	fmt.Printf("router = %v.\n", req)
+}*/
+
 // function that receives the event triggered in aws.
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("request.Body = %v.\n", req.Body)
