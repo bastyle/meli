@@ -28,7 +28,7 @@ func TestJsonRequest(t *testing.T) {
 	if err != nil {
 		t.Errorf("FAILED: %v", err)
 	} else {
-		t.Log("TestJsonRequest PASSED. body: ", string(jsonBody))
+		t.Log("TestJsonRequest PASSED. body: ", jsonBody)
 	}
 	//bodyJSON := make(map[string][]RequestBody)
 	bodyJSON := RequestBody{}

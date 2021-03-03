@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -54,13 +55,30 @@ type RequestBody struct {
 func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("Processing request data for request %s.\n", request.RequestContext.RequestID)
 	fmt.Printf("Body size = %d.\n", len(request.Body))
-
+	jsonBody, err := json.Marshal(request.Body)
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON", StatusCode: 500}, nil
+	}
 	fmt.Println("Headers:")
 	for key, value := range request.Headers {
 		fmt.Printf("    %s: %s\n", key, value)
 	}
+	reqBodyStruct := RequestBody{}
+	//err1 := json.Unmarshal([]byte(request.Body), &reqBodyStruct)
+	err1 := json.Unmarshal([]byte(jsonBody), &reqBodyStruct)
+	if err1 != nil {
+		return events.APIGatewayProxyResponse{Body: "Error transformando request body a JSON", StatusCode: 500}, nil
+	}
+	reqBodyStruct.Satellites[0].Name = "Prueba"
+	if jsonResBody, err := json.Marshal(reqBodyStruct); err != nil {
+		return events.APIGatewayProxyResponse{Body: "Error transformando body a objeto JSON", StatusCode: 500}, nil
+	} else {
+		return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
+	}
 
-	return events.APIGatewayProxyResponse{Body: request.Body, StatusCode: 200}, nil
+	//return events.APIGatewayProxyResponse{Body: jsonBody, StatusCode: 200}, nil
+
+	//return events.APIGatewayProxyResponse{Body: request.Body, StatusCode: 200}, nil
 }
 
 func GetExampleMessage() MockResponse {
