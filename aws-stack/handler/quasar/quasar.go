@@ -52,21 +52,19 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	if err != nil {
 		fmt.Printf("Error Unmarshal req.Body= %v.\n", err)
 		return events.APIGatewayProxyResponse{Body: "Unable to unmarshal JSON req.body ", StatusCode: 500}, nil
-	} /*else {
-		fmt.Printf("reqBodyStruct.Satellites[0].Name = %v.\n", reqBodyStruct.Satellites[0].Name)
-		//resp := ResponseBody{Message: GetSecretMessage(reqBodyStruct)}
-	}*/
+	}
 	// preparación de respuesta (transformacion)
-
 	if jsonStrResp, err := ProcessRequest(reqBodyStruct); err != nil {
 		fmt.Printf("Error ProcessRequest = %v.\n", err)
-		return events.APIGatewayProxyResponse{Body: "Error procesando mensaje.", StatusCode: 500}, nil
+		//return events.APIGatewayProxyResponse{Body: "Error procesando mensaje.", StatusCode: 500}, nil
+		return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 	} else {
 		fmt.Printf("jsonStrResp: %v.\n", jsonStrResp)
 		// response
 		if jsonResBody, err := json.Marshal(jsonStrResp); err != nil {
 			fmt.Printf("Error marshal jsonStrResp= %v.\n", err)
-			return events.APIGatewayProxyResponse{Body: "Error transformando response body a objeto JSON", StatusCode: 500}, nil
+			//return events.APIGatewayProxyResponse{Body: "Error transformando response body a objeto JSON", StatusCode: 500}, nil
+			return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 		} else {
 			fmt.Printf("jsonStrResp %v: .\n", jsonStrResp)
 			return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
@@ -136,7 +134,6 @@ func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
 		} else {
 			fmt.Printf("validacion 1 ok %v.\n", err)
 			resp := ResponseBody{Message: GetMessage(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:])}
-
 			fmt.Printf("message %v.\n", resp.Message)
 			return resp.Message, nil
 		}
