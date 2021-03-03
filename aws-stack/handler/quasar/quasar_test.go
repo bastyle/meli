@@ -36,7 +36,7 @@ func TestJsonRequest(t *testing.T) {
 	if err1 != nil {
 		panic(err1)
 	}
-	fmt.Printf("\n\n json object:::: %+v", bodyJSON)
+	//fmt.Printf("\n\n json object:::: %+v", bodyJSON)
 	//fmt.Printf("\n\n json object:::: %+v", bodyJSON.satellites[0].Name)
 	fmt.Printf("\n\n json object:::: %+v", bodyJSON.Satellites[0].Name)
 }

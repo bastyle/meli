@@ -1,7 +1,8 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
+	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -33,12 +34,33 @@ type RequestBody struct {
 	} `json:"satellites"`
 }
 
-func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+/*func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	body, err := json.Marshal(GetExampleMessage())
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON", StatusCode: 500}, nil
 	}
 	return events.APIGatewayProxyResponse{Body: string(body), StatusCode: 200}, nil
+}*/
+
+/*func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	jsonBody, err := json.Marshal(req)
+
+	if err != nil {
+		return events.APIGatewayProxyResponse{Body: "Unable to marshal JSON" + string(err.), StatusCode: 500}, nil
+	}
+	return events.APIGatewayProxyResponse{Body: string(jsonBody), StatusCode: 200}, nil
+}*/
+
+func handleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Printf("Processing request data for request %s.\n", request.RequestContext.RequestID)
+	fmt.Printf("Body size = %d.\n", len(request.Body))
+
+	fmt.Println("Headers:")
+	for key, value := range request.Headers {
+		fmt.Printf("    %s: %s\n", key, value)
+	}
+
+	return events.APIGatewayProxyResponse{Body: request.Body, StatusCode: 200}, nil
 }
 
 func GetExampleMessage() MockResponse {
