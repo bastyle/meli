@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"testing"
 )
 
@@ -32,18 +30,4 @@ func TestGetMessage(t *testing.T) {
 	} else {
 		t.Log("TestExpectedMsg PASSED.")
 	}
-}
-
-func TestGetJsonMessage(t *testing.T) {
-	t.Log("TestGetJsonMessage...")
-	var kenobi_msg = [5]string{"este", "", "", "mensaje", ""}
-	var skywalker_msg = [5]string{"", "es", "", "", "secreto"}
-	var sato_msg = [5]string{"este", "", "un", "", ""}
-	resp := Response{Message: GetMessage(kenobi_msg[:], skywalker_msg[:], sato_msg[:])}
-	body, err := json.Marshal(resp)
-	if err != nil {
-		t.Errorf("FAILED.. %v: ", err)
-	}
-	t.Log("body json: ", string(body))
-	fmt.Println(string(body))
 }

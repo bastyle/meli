@@ -10,6 +10,7 @@ var skywalker_msg = [5]string{"", "es", "", "", "secreto"}
 var sato_msg = [5]string{"este", "", "un", "", ""}
 var kenobi_msg_6 = [6]string{"este", "", "", "mensaje", "", ""}
 var expectedMsg = "este es un mensaje secreto"
+var bodyJsonExample = `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
 
 func TestExampleMessage(t *testing.T) {
 	if msg := GetExampleMessage(); msg.Message != expectedMsg {
@@ -21,11 +22,10 @@ func TestExampleMessage(t *testing.T) {
 
 func TestJsonRequest(t *testing.T) {
 	t.Log("TestJsonRequest ...........")
-	body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
-	t.Log("TestJsonRequest body: ", body)
+	t.Log("TestJsonRequest body: ", bodyJsonExample)
 	//reqBodyStruct := new(RequestBody)
 	reqBodyStruct := RequestBody{}
-	err := json.Unmarshal([]byte(body), &reqBodyStruct)
+	err := json.Unmarshal([]byte(bodyJsonExample), &reqBodyStruct)
 	if err != nil {
 		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
 	} else {
@@ -40,9 +40,8 @@ func TestJsonRequest(t *testing.T) {
 
 func TestProcessRequest(t *testing.T) {
 	t.Log("TestProcessRequest ...........")
-	body := `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
 	reqBodyStruct := RequestBody{}
-	err := json.Unmarshal([]byte(body), &reqBodyStruct)
+	err := json.Unmarshal([]byte(bodyJsonExample), &reqBodyStruct)
 	if err != nil {
 		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
 	} else {
@@ -51,6 +50,22 @@ func TestProcessRequest(t *testing.T) {
 			t.Errorf("Error ProcessRequest = %v.\n", err)
 		} else {
 			t.Log("jsonStrResp: ", jsonStrResp)
+		}
+	}
+}
+
+func TestGetPosition(t *testing.T) {
+	t.Log("TestGetPosition ...")
+	reqBodyStruct := RequestBody{}
+	err := json.Unmarshal([]byte(bodyJsonExample), &reqBodyStruct)
+	if err != nil {
+		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
+	} else {
+		t.Log("reqBodyStruct.Satellites[0].Distance :", reqBodyStruct.Satellites[0].Distance)
+		if x, y, err := GetPosition(reqBodyStruct); err != nil {
+			t.Errorf("Error ProcessRequest = %v.\n", err)
+		} else {
+			t.Log("x: ", x, "y: ", y)
 		}
 	}
 }
