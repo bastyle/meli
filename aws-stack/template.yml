@@ -12,7 +12,12 @@ Resources:
           Type: Api
           Properties:
             Path: /topsecret_split
-            Method: get, post
+            Method: get
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret_split
+            Method: post
   Quasar:
     Type: AWS::Serverless::Function
     Properties:
