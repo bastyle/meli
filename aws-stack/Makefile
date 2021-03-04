@@ -15,7 +15,10 @@ run:
 install:
 		go get github.com/aws/aws-lambda-go/events
 		go get github.com/aws/aws-lambda-go/lambda
-		
+		go get github.com/aws/aws-sdk-go/aws
+		go get github.com/aws/aws-sdk-go/aws/session
+		go get github.com/aws/aws-sdk-go/service/dynamodb
+		go get github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute
 
 install-dev:
 		go get github.com/awslabs/aws-sam-local
@@ -28,6 +31,40 @@ configure:
 			--bucket $(AWS_BUCKET_NAME) \
 			--region $(AWS_REGION) \
 			--create-bucket-configuration LocationConstraint=$(AWS_REGION)
+
+put-start-items:
+		aws dynamodb put-item \
+			--table-name Satel \
+			--item '{
+				"name": {"S": "kenobi"},
+				"distance": {"N": "0"},
+				"x": {"N": "-500"},
+				"y": {"N": "-200"}
+			}' \
+			--return-consumed-capacity TOTAL \
+			--region $(AWS_REGION)
+		
+		aws dynamodb put-item \
+			--table-name Satel \
+			--item '{
+				"name": {"S": "skywalker"},
+				"distance": {"N": "0"},
+				"x": {"N": "100"},
+				"y": {"N": "-100"}
+			}' \
+			--return-consumed-capacity TOTAL \
+			--region $(AWS_REGION)
+
+		aws dynamodb put-item \
+			--table-name Satel \
+			--item '{
+				"name": {"S": "sato"},
+				"distance": {"N": "0"},
+				"x": {"N": "500"},
+				"y": {"N": "100"}
+			}' \
+			--return-consumed-capacity TOTAL \
+			--region us-east-2  
 
 package: build
 		@aws cloudformation package \
