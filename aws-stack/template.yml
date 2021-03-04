@@ -30,6 +30,23 @@ Resources:
           Properties:
             Path: /topsecret
             Method: post
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: Satellite
+      AttributeDefinitions: 
+        - AttributeName: name
+          AttributeType: S
+        - AttributeName: distance
+          AttributeType: N
+      KeySchema: 
+        - AttributeName: name
+          KeyType: HASH
+        - AttributeName: distance
+          KeyType: RANGE
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
 Outputs:
   URL:
     Description: URL for HTTPS Endpoint
