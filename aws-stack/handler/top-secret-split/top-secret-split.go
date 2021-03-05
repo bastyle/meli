@@ -14,11 +14,11 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	fmt.Printf("router = %v.\n", req)
 	fmt.Printf("Path = %v.\n", req.Path)
 	fmt.Printf("method = %v.\n", req.HTTPMethod)
-	fmt.Printf("pathparam = %v.\n", req.QueryParameters["satellilte_name"])
+	fmt.Printf("pathparam = %v.\n", req.QueryStringParameters["satellilte_name"])
 	if "/topsecret" == req.Path {
 		return events.APIGatewayProxyResponse{Body: "topsecret", StatusCode: 200}, nil
-	} else if "/topsecret_split" == req.Path && "POST" == req.HTTPMethod && "" != req.QueryParameters["satellilte_name"]) {
-		return events.APIGatewayProxyResponse{Body: "topsecret_split post" + req.QueryParameters["satellilte_name"]), StatusCode: 200}, nil
+	} else if "/topsecret_split" == req.Path && "POST" == req.HTTPMethod && "" != req.QueryStringParameters["satellilte_name"] {
+		return events.APIGatewayProxyResponse{Body: "topsecret_split post" + req.QueryStringParameters["satellilte_name"], StatusCode: 200}, nil
 	} else if "/topsecret_split" == req.Path && "GET" == req.HTTPMethod {
 		return events.APIGatewayProxyResponse{Body: "topsecret_split get", StatusCode: 200}, nil
 	}
