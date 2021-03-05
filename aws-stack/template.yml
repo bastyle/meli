@@ -17,7 +17,7 @@ Resources:
         PostEvent:
           Type: Api
           Properties:
-            Path: /topsecret_split
+            Path: /topsecret_split/{satellilte_name}
             Method: post              
   Quasar:
     Type: AWS::Serverless::Function
