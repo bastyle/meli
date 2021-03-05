@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
 )
 
 type MockResponse struct {
@@ -30,7 +29,7 @@ type ResponseBody struct {
 }
 
 // function that receives the event triggered in aws.
-func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func handleOffLineRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	fmt.Printf("request.Body = %v.\n", req.Body)
 	fmt.Printf("request.Body size = %d.\n", len(req.Body))
 	fmt.Printf("path = %v.\n", req.Path)
@@ -110,15 +109,7 @@ func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
 
 }
 
-//this function is an example msg.
-/*func GetExampleMessage() MockResponse {
-	var kenobi_msg = [5]string{"este", "", "", "mensaje", ""}
-	var skywalker_msg = [5]string{"", "es", "", "", "secreto"}
-	var sato_msg = [5]string{"este", "", "un", "", ""}
-	return MockResponse{Message: GetMessage(kenobi_msg[:], skywalker_msg[:], sato_msg[:])}
-}*/
-
 // the main function
-func main() {
+/*func main() {
 	lambda.Start(handleRequest)
-}
+}*/

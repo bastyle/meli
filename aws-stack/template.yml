@@ -22,14 +22,7 @@ Resources:
             RequestParameters:
               - method.request.path.satellite_name:
                   Required: true
-  Quasar:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: dist/handler/quasar
-      Runtime: go1.x
-      Tracing: Active
-      Events:
-        GetEvent:
+        PostOnlineEvent:
           Type: Api
           Properties:
             Path: /topsecret
