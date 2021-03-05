@@ -20,7 +20,7 @@ Resources:
             Path: /topsecret_split/{satellite_name}
             Method: post
             RequestParameters:
-              - method.request.path:
+              - method.request.path.satellite_name:
                   Required: true
   Quasar:
     Type: AWS::Serverless::Function
