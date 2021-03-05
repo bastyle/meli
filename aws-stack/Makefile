@@ -64,7 +64,7 @@ put-start-items:
 				"y": {"N": "100"}
 			}' \
 			--return-consumed-capacity TOTAL \
-			--region us-east-2  
+			--region $(AWS_REGION)
 
 package: build
 		@aws cloudformation package \
