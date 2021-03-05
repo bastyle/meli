@@ -10,9 +10,11 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/aws/aws-sdk-go/service/dynamodb/expression"
 )
 
 const awsRegion = "us-east-2"
+const tableN = "Satel"
 
 /*type SatelliteEntity struct {
 	Name string `json:"name"`
@@ -22,9 +24,12 @@ type SatelliteDistance struct {
 	Distance float64 `json:"distance"`
 }*/
 
-type DataSat struct {
+type SatEntity struct {
+	Name     string   `json:"name"`
 	Distance float32  `json:"distance"`
 	Message  []string `json:"message"`
+	X        float32  `json:"x"`
+	Y        float32  `json:"y"`
 }
 
 func UpdateSatellite(name string, inputDistance float64, messages []string) error {
@@ -38,7 +43,7 @@ func UpdateSatellite(name string, inputDistance float64, messages []string) erro
 		return err
 	}
 	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String("Satel"),
+		TableName: aws.String(tableN),
 		Key: map[string]*dynamodb.AttributeValue{
 			"name": {
 				S: aws.String(name),
@@ -81,10 +86,10 @@ func UpdateDistanceSatellite(inputDistance float64, name string) error {
 	)
 	svc := dynamodb.New(sess)
 	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String("Satel"),
+		TableName: aws.String(tableN),
 		Key: map[string]*dynamodb.AttributeValue{
 			"name": {
-				S: aws.String("kenobi"), //TODO cambiar a name
+				S: aws.String(name),
 			},
 		},
 		ReturnValues:     aws.String("UPDATED_NEW"),
@@ -101,24 +106,22 @@ func UpdateDistanceSatellite(inputDistance float64, name string) error {
 	return nil
 }
 
-//TODO terminar esta función debe retornar array de mensaje y distancia
-func GetDataSatell(satName string) (DataSat, error) {
+func GetDataSatell(satName string) (SatEntity, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(awsRegion)},
 	)
 	svc := dynamodb.New(sess)
 	satResult, err := svc.GetItem(&dynamodb.GetItemInput{
-		TableName: aws.String("Satel"),
+		TableName: aws.String(tableN),
 		Key: map[string]*dynamodb.AttributeValue{
 			"name": {
 				S: aws.String(satName),
 			},
 		},
 	})
-	item := DataSat{}
+	item := SatEntity{}
 	err = dynamodbattribute.UnmarshalMap(satResult.Item, &item)
-	fmt.Println("item: ", item)
-	//fmt.Println("sat result: ", satResult.Item["distance"])
+	//fmt.Println("item: ", item)
 	if err != nil {
 		fmt.Println(err.Error())
 		return item, err
@@ -130,7 +133,60 @@ func GetDataSatell(satName string) (DataSat, error) {
 	}
 }
 
-/*func GetList(messages []string) (string, error) {
+func GetAllDataSatell() ([]SatEntity, error) {
+	var items []SatEntity
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String(awsRegion)},
+	)
+	svc := dynamodb.New(sess)
+	proj := expression.NamesList(expression.Name("name"), expression.Name("distance"), expression.Name("message"), expression.Name("x"), expression.Name("y"))
+	filt := expression.Name("name").NotEqual(expression.Value(""))
+	//filt := expression.Name("name").NotEqual(expression.Value("kenobi"))
+	expr, err := expression.NewBuilder().WithFilter(filt).WithProjection(proj).Build()
+	if err != nil {
+		fmt.Println("Got error building expression:")
+		fmt.Println(err.Error())
+		return items, err
+	}
+	params := &dynamodb.ScanInput{
+		ExpressionAttributeNames:  expr.Names(),
+		ExpressionAttributeValues: expr.Values(),
+		FilterExpression:          expr.Filter(),
+		ProjectionExpression:      expr.Projection(),
+		TableName:                 aws.String(tableN),
+	}
+	result, err := svc.Scan(params)
+	if err != nil {
+		fmt.Println("Query API call failed:")
+		fmt.Println((err.Error()))
+		return items, err
+	}
+	num_items := len(result.Items)
+	fmt.Println("cant items:: ", num_items)
+	for _, i := range result.Items {
+		item := SatEntity{}
+		err = dynamodbattribute.UnmarshalMap(i, &item)
+		if err != nil {
+			fmt.Println("Got error unmarshalling:")
+			fmt.Println(err.Error())
+			return items, err
+		}
+		items = append(items, item)
+	}
+	return items, nil
+}
+
+/*func getSession() (DynamoDB, error) {
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String(awsRegion)},
+	)
+	if err != nil {
+		return nil, err
+	} else {
+		return dynamodb.New(sess), nil
+	}
+}
+func GetList(messages []string) (string, error) {
 	var msgAttValArray []*dynamodb.AttributeValue
 	for k, v := range messages {
 		av := &dynamodb.AttributeValue{
@@ -151,7 +207,7 @@ func UpdateMessage(msgAttValArray []*dynamodb.AttributeValue, name string) error
 	)
 	svc := dynamodb.New(sess)
 	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String("Satel"),
+		TableName: aws.String(tableN),
 		Key: map[string]*dynamodb.AttributeValue{
 			"name": {
 				S: aws.String(name),

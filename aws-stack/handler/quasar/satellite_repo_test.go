@@ -28,7 +28,7 @@ func TestUpdateDistanceSatellite(t *testing.T) {
 
 func TestGetDataSatell(t *testing.T) {
 	t.Log("TestSatellites:")
-	//item := DataSat{}
+	//item := SatEntity{}
 	if item, err := GetDataSatell("sato"); err != nil {
 		t.Errorf("Error get Data = %v.\n", err)
 	} else {
@@ -44,5 +44,15 @@ func TestUpdateSatellite(t *testing.T) {
 		t.Errorf("Error UpdateSatellite = %v.\n", err)
 	} else {
 		t.Log("satellite updated.")
+	}
+}
+
+func TestGetAllDataSatell(t *testing.T) {
+	if items, err := GetAllDataSatell(); err != nil {
+		t.Errorf("Error GetAllDataSatell = %v.\n", err)
+	} else {
+		t.Log("item.X:: ", items[0].X)
+		t.Log("item.X:: ", items[1].X)
+		t.Log("item.X:: ", items[2].X)
 	}
 }
