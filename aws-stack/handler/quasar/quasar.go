@@ -21,7 +21,8 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	switch pathAux {
 	case topsecretPath:
 		fmt.Printf("redirect request to topsecret online api = %v.\n", satelliteName)
-		return events.APIGatewayProxyResponse{Body: "redirect request to topsecret online api", StatusCode: 200}, nil
+		//return events.APIGatewayProxyResponse{Body: "redirect request to topsecret online api", StatusCode: 200}, nil
+		return HandleOnLineRequest(req)
 	case topsecretSplitPath:
 		if "GET" == req.HTTPMethod {
 			return events.APIGatewayProxyResponse{Body: "redirect request to get topsecret_split offline api" + satelliteName, StatusCode: 200}, nil
