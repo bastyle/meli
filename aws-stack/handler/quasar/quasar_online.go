@@ -30,10 +30,6 @@ type ResponseBody struct {
 
 // function that receives the event triggered in aws.
 func HandleOnLineRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	fmt.Printf("request.Body = %v.\n", req.Body)
-	fmt.Printf("request.Body size = %d.\n", len(req.Body))
-	fmt.Printf("path = %v.\n", req.Path)
-	fmt.Printf("method = %v.\n", req.HTTPMethod)
 	reqBodyStruct := RequestBody{}
 	err := json.Unmarshal([]byte(req.Body), &reqBodyStruct)
 	if err != nil {

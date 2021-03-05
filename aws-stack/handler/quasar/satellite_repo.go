@@ -26,10 +26,10 @@ type SatelliteDistance struct {
 
 type SatEntity struct {
 	Name     string   `json:"name"`
-	Distance float32  `json:"distance"`
+	Distance float64  `json:"distance"`
 	Message  []string `json:"message"`
-	X        float32  `json:"x"`
-	Y        float32  `json:"y"`
+	X        float64  `json:"x"`
+	Y        float64  `json:"y"`
 }
 
 func UpdateSatellite(name string, inputDistance float64, messages []string) error {
@@ -60,9 +60,10 @@ func UpdateSatellite(name string, inputDistance float64, messages []string) erro
 	}
 	_, err = svc.UpdateItem(input)
 	if err != nil {
-		fmt.Println(err.Error())
-		return errors.New("Error updating key")
+		fmt.Printf("err: %v \n", err.Error())
+		return errors.New("Error processing the request.")
 	}
+
 	return nil
 }
 
@@ -75,7 +76,7 @@ func getListAttribute(messages []string) ([]*dynamodb.AttributeValue, error) {
 		msgAtt = append(msgAtt, part)
 	}
 	if len(msgAtt) == 0 {
-		return nil, errors.New("void array")
+		return nil, errors.New("void message")
 	}
 	return msgAtt, nil
 }
