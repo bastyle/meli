@@ -29,18 +29,18 @@ func HandlePostOffLineRequest(req events.APIGatewayProxyRequest) (events.APIGate
 	satelliteName := strings.ToLower(req.PathParameters["satellite_name"])
 	fmt.Printf("satelliteName = %v.\n", satelliteName)
 	if err := UpdateSatellite(satelliteName, satEntity.Distance, satEntity.Message); err != nil {
-		return events.APIGatewayProxyResponse{Body: string(err.Error()), StatusCode: 500}, nil
+		return events.APIGatewayProxyResponse{Body: getExcptionResponse(err.Error(), 500), StatusCode: 500}, nil
 	} else {
 		return events.APIGatewayProxyResponse{Body: string(`{"detail":"satellite updated!}`), StatusCode: 200}, nil
 	}
 }
 
-func getExcptionResponse(err string, code int) string {
+func getExcptionResponse(inputErr string, code int) string {
 	excpRes := ExcpResponse{}
-	excpRes.Detail = err
+	excpRes.Detail = inputErr
 	excpRes.Code = code
 	if jsonExcBody, err := json.Marshal(excpRes); err != nil {
-		return ""
+		return inputErr
 	} else {
 		return string(jsonExcBody)
 	}
