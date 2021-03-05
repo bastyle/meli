@@ -12,11 +12,11 @@ var kenobi_msg_6 = [6]string{"este", "", "", "mensaje", "", ""}
 var expectedMsg = "este es un mensaje secreto"
 var bodyJsonExample = `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
 
-func TestExampleMessage(t *testing.T) {
+/*func TestExampleMessage(t *testing.T) {
 	if msg := GetExampleMessage(); msg.Message != expectedMsg {
 		t.Errorf("FAILED: Expected: %v, got: %v", expectedMsg, msg)
 	}
-}
+}*/
 
 func TestGetSecretMessage(t *testing.T) {
 	reqBodyStruct := RequestBody{}
