@@ -8,8 +8,8 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-var topsecretSplitPath = "/topsecret_split"
-var topsecretPath = "/topsecret"
+var topsecretSplitPath = "topsecret_split"
+var topsecretPath = "topsecret"
 
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	//name := "Bastian"
