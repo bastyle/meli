@@ -38,7 +38,7 @@ func UpdateSatellite(name string, inputDistance float64, messages []string) erro
 	)
 	svc := dynamodb.New(sess)
 	//var msgAtt []*dynamodb.AttributeValue
-	msgAtt, err := GetListAttribute(messages)
+	msgAtt, err := getListAttribute(messages)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func UpdateSatellite(name string, inputDistance float64, messages []string) erro
 	return nil
 }
 
-func GetListAttribute(messages []string) ([]*dynamodb.AttributeValue, error) {
+func getListAttribute(messages []string) ([]*dynamodb.AttributeValue, error) {
 	var msgAtt []*dynamodb.AttributeValue
 	for _, v := range messages {
 		part := &dynamodb.AttributeValue{
@@ -78,32 +78,6 @@ func GetListAttribute(messages []string) ([]*dynamodb.AttributeValue, error) {
 		return nil, errors.New("void array")
 	}
 	return msgAtt, nil
-}
-
-func UpdateDistanceSatellite(inputDistance float64, name string) error {
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(awsRegion)},
-	)
-	svc := dynamodb.New(sess)
-	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String(tableN),
-		Key: map[string]*dynamodb.AttributeValue{
-			"name": {
-				S: aws.String(name),
-			},
-		},
-		ReturnValues:     aws.String("UPDATED_NEW"),
-		UpdateExpression: aws.String("set distance=:d"),
-		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":d": {N: aws.String(strconv.FormatFloat(inputDistance, 'f', -1, 64))},
-		},
-	}
-	_, err = svc.UpdateItem(input)
-	if err != nil {
-		fmt.Println(err.Error())
-		return errors.New("Error updating key")
-	}
-	return nil
 }
 
 func GetDataSatell(satName string) (SatEntity, error) {
@@ -176,6 +150,20 @@ func GetAllDataSatell() ([]SatEntity, error) {
 	return items, nil
 }
 
+func ResetSatellDynamicData() error {
+	allSatellites, err := GetAllDataSatell()
+	if err != nil {
+		return err
+	}
+	blankArray := [1]string{""}
+	for _, sat := range allSatellites {
+		if err := UpdateSatellite(sat.Name, 0, blankArray[:]); err != nil {
+			fmt.Printf("Cannot reset satellite %v.\n", sat.Name)
+		}
+	}
+	return nil
+}
+
 /*func getSession() (DynamoDB, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(awsRegion)},
@@ -186,6 +174,33 @@ func GetAllDataSatell() ([]SatEntity, error) {
 		return dynamodb.New(sess), nil
 	}
 }
+
+func UpdateDistanceSatellite(inputDistance float64, name string) error {
+	sess, err := session.NewSession(&aws.Config{
+		Region: aws.String(awsRegion)},
+	)
+	svc := dynamodb.New(sess)
+	input := &dynamodb.UpdateItemInput{
+		TableName: aws.String(tableN),
+		Key: map[string]*dynamodb.AttributeValue{
+			"name": {
+				S: aws.String(name),
+			},
+		},
+		ReturnValues:     aws.String("UPDATED_NEW"),
+		UpdateExpression: aws.String("set distance=:d"),
+		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
+			":d": {N: aws.String(strconv.FormatFloat(inputDistance, 'f', -1, 64))},
+		},
+	}
+	_, err = svc.UpdateItem(input)
+	if err != nil {
+		fmt.Println(err.Error())
+		return errors.New("Error updating key")
+	}
+	return nil
+}
+
 func GetList(messages []string) (string, error) {
 	var msgAttValArray []*dynamodb.AttributeValue
 	for k, v := range messages {
