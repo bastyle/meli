@@ -32,12 +32,29 @@ type SatEntity struct {
 	Y        float64  `json:"y"`
 }
 
+func existSat(satName string) bool {
+	if item, err := GetDataSatell(satName); err != nil {
+		return false
+	} else if item.Name == satName {
+		return true
+	} else {
+		return false
+	}
+}
+
 func UpdateSatellite(name string, inputDistance float64, messages []string) error {
+	if !existSat(name) {
+		return errors.New("satellite dosn't exists.")
+	}
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(awsRegion)},
 	)
 	svc := dynamodb.New(sess)
 	//var msgAtt []*dynamodb.AttributeValue
+	/*if _,err GetDataSatell(name);err!=nil{
+
+	}*/
+
 	msgAtt, err := getListAttribute(messages)
 	if err != nil {
 		return err

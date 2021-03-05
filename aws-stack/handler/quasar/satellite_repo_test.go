@@ -30,11 +30,14 @@ func TestGetDistance(t *testing.T) {
 func TestGetDataSatell(t *testing.T) {
 	t.Log("TestSatellites:")
 	//item := SatEntity{}
-	if item, err := GetDataSatell("sato"); err != nil {
+	exampleName := "sato"
+	if item, err := GetDataSatell(exampleName); err != nil {
 		t.Errorf("Error get Data = %v.\n", err)
-	} else {
+	} else if item.Name == exampleName {
 		t.Log("item:", item)
 		fmt.Printf("len msg: %v.\n", len(item.Message))
+	} else {
+		t.Log("no existe satelite buscado.")
 	}
 }
 
@@ -49,10 +52,17 @@ func TestGetAllDataSatell(t *testing.T) {
 }
 
 func TestUpdateSatellite(t *testing.T) {
-	//msg := [5]string{"kenobi-test", "", "un", "mensaje", ""}
 	msg := [1]string{""}
-	//t.Log("arreglo?????:", msg[:])
 	if err := UpdateSatellite("kenobi", 0, msg[:]); err != nil {
+		t.Errorf("Error UpdateSatellite = %v.\n", err)
+	} else {
+		t.Log("satellite updated.")
+	}
+}
+
+func TestUpdateFakeSatellite(t *testing.T) {
+	msg := [1]string{""}
+	if err := UpdateSatellite("fakeSatellite", 0, msg[:]); err != nil {
 		t.Errorf("Error UpdateSatellite = %v.\n", err)
 	} else {
 		t.Log("satellite updated.")
@@ -66,3 +76,5 @@ func TestResetSatellDynamicData(t *testing.T) {
 		t.Log("satellites have been updated.")
 	}
 }
+
+//probar get que no exista para ver posible error a controlar
