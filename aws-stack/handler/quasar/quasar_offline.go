@@ -81,9 +81,15 @@ func IsThereNecessaryInfo(satellites []SatEntity) (bool, RequestBody) {
 		reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, satAux)*/
 	}
 	//FIXME ordenar arreglo (kenobi, skywalker, sato) darle un id al satelite? y ordenar por ahí
-	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("kenobi", satellites))
+	//reqBodyStruct.Satellites :=[3]Sats{}
+	var sats [3]Sats
+	sats[0] = getSatByName("kenobi", satellites)
+	sats[1] = getSatByName("skywalker", satellites)
+	sats[2] = getSatByName("sato", satellites)
+	reqBodyStruct.Satellites = sats[:]
+	/*reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("kenobi", satellites))
 	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("skywalker", satellites))
-	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("sato", satellites))
+	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("sato", satellites))*/
 	return true, reqBodyStruct
 }
 
