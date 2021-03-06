@@ -74,14 +74,30 @@ func IsThereNecessaryInfo(satellites []SatEntity) (bool, RequestBody) {
 			fmt.Printf("not enough information. (distance: %v message: %v)\n", s.Distance, s.Message)
 			return false, reqBodyStruct
 		}
-		//FIXME fuera de rango, hay que instanciar el arreglo
-		satAux := Sats{}
+		/*satAux := Sats{}
 		satAux.Name = s.Name
 		satAux.Distance = float32(s.Distance)
 		satAux.Message = s.Message
-		reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, satAux)
+		reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, satAux)*/
 	}
+	//FIXME ordenar arreglo (kenobi, skywalker, sato) darle un id al satelite? y ordenar por ahí
+	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("kenobi", satellites))
+	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("skywalker", satellites))
+	reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, getSatByName("sato", satellites))
 	return true, reqBodyStruct
+}
+
+func getSatByName(satName string, satellites []SatEntity) Sats {
+	for _, s := range satellites {
+		if satName == s.Name {
+			satAux := Sats{}
+			satAux.Name = s.Name
+			satAux.Distance = float32(s.Distance)
+			satAux.Message = s.Message
+			return satAux
+		}
+	}
+	return Sats{}
 }
 
 //function that generates a generic json error
