@@ -13,6 +13,7 @@ var topsecretPath = "topsecret"
 
 const satellitesExpected = 3
 
+// process event from api gateway
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	pathAux := strings.Split(req.Path, "/")[1]
 	fmt.Printf("::::pathAux = %v.\n", pathAux)
@@ -44,6 +45,7 @@ func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyRes
 	return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 }
 
+// the main function
 func main() {
 	lambda.Start(handleRequest)
 }
