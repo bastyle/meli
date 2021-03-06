@@ -41,27 +41,32 @@ func HandleGetOffLineRequest(req events.APIGatewayProxyRequest) (events.APIGatew
 	satellites, err := GetAllDataSatell()
 	if err != nil {
 		return events.APIGatewayProxyResponse{Body: getExceptionResponse(err.Error(), 500), StatusCode: 500}, nil
-	} else if isOk, reqBody := IsThereNecessaryInfo(satellites); !isOk {
-		reqBody.Satellites[0].Name = "solo para pasar"
-		return events.APIGatewayProxyResponse{Body: getExceptionResponse("not enough information", 200), StatusCode: 200}, nil
 	}
+	if isOk, reqBody := IsThereNecessaryInfo(satellites); !isOk {
+		return events.APIGatewayProxyResponse{Body: getExceptionResponse("not enough information", 200), StatusCode: 200}, nil
+	} else if responseBody, err := ProcessRequest(reqBody); err != nil {
+		fmt.Printf("Error ProcessRequest = %v.\n", err)
+		return events.APIGatewayProxyResponse{Body: getExceptionResponse("not enough information", 200), StatusCode: 200}, nil
+	} else {
+		fmt.Printf("responseBody: %v.\n", responseBody)
+		if jsonResBody, err := json.Marshal(responseBody); err != nil {
+			fmt.Printf("Error marshal responseBody= %v.\n", err)
+			return events.APIGatewayProxyResponse{Body: getExceptionResponse("not enough information", 200), StatusCode: 200}, nil
+		} else {
+			fmt.Printf("jsonResBody %v: .\n", jsonResBody)
+			return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
+		}
+	}
+
 	//enviar a procesar satellites
 
-	return events.APIGatewayProxyResponse{Body: getExceptionResponse("not enough information!", 500), StatusCode: 500}, nil
+	return events.APIGatewayProxyResponse{Body: getExceptionResponse("not enough information", 500), StatusCode: 500}, nil
 }
 
 //function tah validates the information of the satllites in the db
 func IsThereNecessaryInfo(satellites []SatEntity) (bool, RequestBody) {
 	//TODO tengo que armar un objeto del tipo RequestBody y enviarlo a la funcion ProcessRequest de la version online
 	reqBodyStruct := RequestBody{}
-	//satArray := []Satellites{}
-
-	/*if len(satellites) != satellitesExpected {
-		fmt.Printf("satellites expected %v \n", satellitesExpected)
-		return false, reqBodyStruct
-	}*/
-
-	//lenAux := 0
 	fmt.Printf("reqBodyStruct:::: %v \n", reqBodyStruct)
 	for _, s := range satellites {
 		fmt.Printf("satellite %v \n", s)
@@ -69,20 +74,9 @@ func IsThereNecessaryInfo(satellites []SatEntity) (bool, RequestBody) {
 			fmt.Printf("not enough information. (distance: %v message: %v)\n", s.Distance, s.Message)
 			return false, reqBodyStruct
 		}
-		fmt.Printf("dos::::::::::::::::::::::::::::::: %v \n", s)
-		/*if lenAux == 0 { //primera iteracion
-			lenAux = len(s.Message)
-		}
-		if lenAux != len(s.Message) {
-			fmt.Printf("There is a difference with the length of the messages %v vs %v \n", lenAux, len(s.Message))
-			return false, reqBodyStruct
-		}*/
-		//armar objeto por iteracion
-		//reqBodyStruct = append(reqBodyStruct, s)
 		//FIXME fuera de rango, hay que instanciar el arreglo
 		satAux := Sats{}
 		satAux.Name = s.Name
-		fmt.Printf("tewa::::::::::::::::::::::::::::::: %v \n", s)
 		satAux.Distance = float32(s.Distance)
 		satAux.Message = s.Message
 		reqBodyStruct.Satellites = append(reqBodyStruct.Satellites, satAux)
