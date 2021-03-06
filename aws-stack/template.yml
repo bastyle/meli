@@ -7,7 +7,6 @@ Resources:
       Handler: dist/handler/quasar
       Runtime: go1.x
       Tracing: Active
-      #Policies: AmazonDynamoDBFullAccess
       Policies: 
         - DynamoDBCrudPolicy:
              TableName: !Ref DynamoDBTable
@@ -64,8 +63,8 @@ Resources:
         - client_credentials
       ClientName: challenge-meli-client-app
       GenerateSecret: true
-      AllowedOAuthScopes:
-        - challenge-meli-rs/post
+      AllowedOAuthScopes: !GetAtt MeliResourceService.Scopes
+        #- challenge-meli-rs/post
       AllowedOAuthFlowsUserPoolClient: true
   MeliDomain:
     Type: AWS::Cognito::UserPoolDomain
