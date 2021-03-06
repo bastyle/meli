@@ -12,6 +12,7 @@ func TestGetLocation(t *testing.T) {
 	fmt.Println("TestGetLocation")
 	//ejemplo graficamente real para punto D -100,400
 	x, y := GetLocation(721.11, 538.51, 670.82)
+	fmt.Printf("x: %v y: %v \n", x, y)
 	fmt.Printf("x: %.1f y: %.1f \n", x, y)
 	if auxX, _ := strconv.ParseFloat(fmt.Sprintf("%.1f", x), 32); auxX != -100 {
 		t.Errorf("TestGetLocation FAILED: Expected x = -100 and got x=%.2f", auxX)
