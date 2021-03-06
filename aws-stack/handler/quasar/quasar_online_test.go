@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/aws/aws-lambda-go/events"
 )
 
 var kenobi_msg = [5]string{"este", "", "", "mensaje", ""}
@@ -18,7 +20,6 @@ func TestGetSecretMessage(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error Unmarshal req.Body= %v.\n", err)
 	} else {
-		//t.Log("reqBodyStruct.Satellites[0].Name :", reqBodyStruct.Satellites[0].Name)
 		if jsonStrResp, err := GetSecretMessage(reqBodyStruct); err != nil {
 			t.Errorf("Error getting satellites message= %v.\n", err)
 		} else {
@@ -53,4 +54,17 @@ func TestGetPosition(t *testing.T) {
 			t.Log("x: ", x, "y: ", y)
 		}
 	}
+}
+
+func TestHandleOnLineRequest(t *testing.T) {
+	var bodyAux = `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
+	//var pathParams = map[string]string{"satellite_name": "sato"}
+	req := events.APIGatewayProxyRequest{Body: bodyAux}
+	res, err := HandleOnLineRequest(req)
+	if err != nil {
+		t.Errorf("err: %v\n", err.Error())
+	} else {
+		t.Log("TestGetHandler status code: ", res.StatusCode)
+	}
+
 }

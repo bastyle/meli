@@ -57,7 +57,7 @@ func HandleOnLineRequest(req events.APIGatewayProxyRequest) (events.APIGatewayPr
 			fmt.Printf("Error marshal responseBody= %v.\n", err)
 			return events.APIGatewayProxyResponse{StatusCode: 404}, nil
 		} else {
-			fmt.Printf("jsonResBody %v: .\n", jsonResBody)
+			//fmt.Printf("jsonResBody %v: .\n", jsonResBody)
 			return events.APIGatewayProxyResponse{Body: string(jsonResBody), StatusCode: 200}, nil
 		}
 	}
@@ -103,9 +103,8 @@ func GetPosition(reqBodyStruct RequestBody) (float32, float32, error) {
 
 //this function is a wrapper to get secret message.
 func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
-	//fmt.Printf("msg_1: %v.\n", reqBodyStruct.Satellites[0].Message[:])
 	if _, err := ValidateMessagesLen(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:]); err != nil {
-		fmt.Printf("error:::: %v.\n", err)
+		//fmt.Printf("error:::: %v.\n", err)
 		return "", err
 	} else {
 		resp := ResponseBody{Message: GetMessage(reqBodyStruct.Satellites[0].Message[:], reqBodyStruct.Satellites[1].Message[:], reqBodyStruct.Satellites[2].Message[:])}
@@ -114,8 +113,3 @@ func GetSecretMessage(reqBodyStruct RequestBody) (string, error) {
 	}
 
 }
-
-// the main function
-/*func main() {
-	lambda.Start(handleRequest)
-}*/
