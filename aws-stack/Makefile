@@ -32,7 +32,7 @@ configure:
 			--region $(AWS_REGION) \
 			--create-bucket-configuration LocationConstraint=$(AWS_REGION)
 
-put-start-items:
+put-satellites-into-db:
 		aws dynamodb put-item \
 			--table-name Satel \
 			--item '{

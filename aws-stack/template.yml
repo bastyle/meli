@@ -7,7 +7,10 @@ Resources:
       Handler: dist/handler/quasar
       Runtime: go1.x
       Tracing: Active
-      Policies: AmazonDynamoDBFullAccess
+      #Policies: AmazonDynamoDBFullAccess
+      Policies: 
+        - DynamoDBCrudPolicy:
+             TableName: !Ref DynamoDBTable
       Events:
         GetEvent:
           Type: Api
