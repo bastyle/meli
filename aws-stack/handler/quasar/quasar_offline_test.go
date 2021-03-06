@@ -34,7 +34,7 @@ func TestOnliGetHandler(t *testing.T) {
 }
 
 func TestOfflineHandlePostOffLineRequest(t *testing.T) {
-	var bodyAux = `{"distance":538.51,"message":["este","","","mensaje",""]}`
+	var bodyAux = `{"distance":670.82,"message":["este","","","mensaje",""]}`
 	var pathParams = map[string]string{"satellite_name": "sato"}
 	req := events.APIGatewayProxyRequest{Body: bodyAux, PathParameters: pathParams}
 	_, err := HandlePostOffLineRequest(req)

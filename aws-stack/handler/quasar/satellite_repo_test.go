@@ -1,20 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
-func TestGetDataSatell(t *testing.T) {
-	t.Log("TestSatellites:")
+func TestGetAndUpdateSatell(t *testing.T) {
 	exampleName := "sato"
 	if item, err := GetDataSatell(exampleName); err != nil {
 		t.Errorf("Error get Data = %v.\n", err)
 	} else if item.Name == exampleName {
 		t.Log("item:", item)
-		fmt.Printf("len msg: %v.\n", len(item.Message))
+		if err1 := UpdateSatellite(item.Name, item.Distance, item.Message); err1 != nil {
+			t.Errorf("Error update Data = %v.\n", err1)
+		}
 	} else {
-		t.Log("no existe satelite buscado.")
+		t.Log("Satellite was not found.")
 	}
 }
 
@@ -35,7 +35,7 @@ func TestGetAllDataSatell(t *testing.T) {
 	} else {
 		t.Log("satellite updated.")
 	}
-}*/
+}
 
 func TestUpdateFakeSatellite(t *testing.T) {
 	msg := [1]string{""}
@@ -53,3 +53,10 @@ func TestUpdateFakeSatellite(t *testing.T) {
 		t.Log("satellites have been updated.")
 	}
 }*/
+
+func TestExistSat(t *testing.T) {
+	var satNameExample = "kenobi"
+	if !existSat(satNameExample) {
+		t.Errorf("Satellite was not found %v.\n", satNameExample)
+	}
+}

@@ -50,11 +50,6 @@ func UpdateSatellite(name string, inputDistance float64, messages []string) erro
 		Region: aws.String(awsRegion)},
 	)
 	svc := dynamodb.New(sess)
-	//var msgAtt []*dynamodb.AttributeValue
-	/*if _,err GetDataSatell(name);err!=nil{
-
-	}*/
-
 	msgAtt, err := getListAttribute(messages)
 	if err != nil {
 		return err
@@ -181,83 +176,3 @@ func ResetSatellDynamicData() error {
 	}
 	return nil
 }
-
-/*func getSession() (DynamoDB, error) {
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(awsRegion)},
-	)
-	if err != nil {
-		return nil, err
-	} else {
-		return dynamodb.New(sess), nil
-	}
-}
-
-func UpdateDistanceSatellite(inputDistance float64, name string) error {
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(awsRegion)},
-	)
-	svc := dynamodb.New(sess)
-	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String(tableN),
-		Key: map[string]*dynamodb.AttributeValue{
-			"name": {
-				S: aws.String(name),
-			},
-		},
-		ReturnValues:     aws.String("UPDATED_NEW"),
-		UpdateExpression: aws.String("set distance=:d"),
-		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":d": {N: aws.String(strconv.FormatFloat(inputDistance, 'f', -1, 64))},
-		},
-	}
-	_, err = svc.UpdateItem(input)
-	if err != nil {
-		fmt.Println(err.Error())
-		return errors.New("Error updating key")
-	}
-	return nil
-}
-
-func GetList(messages []string) (string, error) {
-	var msgAttValArray []*dynamodb.AttributeValue
-	for k, v := range messages {
-		av := &dynamodb.AttributeValue{
-			S: aws.String(v),
-		}
-		msgAttValArray = append(msgAttValArray, av)
-	}
-	fmt.Println("msgAttValArray: ", msgAttValArray)
-	if err := UpdateMessage(msgAttValArray, "kenobi"); err != nil {
-		return "ERROR", errors.New("Error updating message")
-	}
-	return "", nil
-}
-
-func UpdateMessage(msgAttValArray []*dynamodb.AttributeValue, name string) error {
-	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(awsRegion)},
-	)
-	svc := dynamodb.New(sess)
-	input := &dynamodb.UpdateItemInput{
-		TableName: aws.String(tableN),
-		Key: map[string]*dynamodb.AttributeValue{
-			"name": {
-				S: aws.String(name),
-			},
-		},
-		ReturnValues:     aws.String("UPDATED_NEW"),
-		UpdateExpression: aws.String("set message=:m"),
-		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":m": {
-				L: msgAttValArray,
-			},
-		},
-	}
-	_, err = svc.UpdateItem(input)
-	if err != nil {
-		fmt.Println(err.Error())
-		return errors.New("Error updating key")
-	}
-	return nil
-}*/
