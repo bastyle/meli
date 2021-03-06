@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -14,6 +13,7 @@ var kenobi_msg_6 = [6]string{"este", "", "", "mensaje", "", ""}
 var expectedMsg = "este es un mensaje secreto"
 var bodyJsonExample = `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
 
+/*
 func TestGetSecretMessage(t *testing.T) {
 	reqBodyStruct := RequestBody{}
 	err := json.Unmarshal([]byte(bodyJsonExample), &reqBodyStruct)
@@ -54,7 +54,7 @@ func TestGetPosition(t *testing.T) {
 			t.Log("x: ", x, "y: ", y)
 		}
 	}
-}
+}*/
 
 func TestHandleOnLineRequest(t *testing.T) {
 	var bodyAux = `{"satellites":[{"name":"kenobi","distance":100.0,"message":["este","","","mensaje",""]},{"name":"skywalker","distance":115.5,"message":["","es","","","secreto"]},{"name":"sato","distance":142.7,"message":["este","","un","",""]}]}`
