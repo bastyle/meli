@@ -12,13 +12,23 @@ type MockResponse struct {
 	Message string `json:"message"`
 }
 
+type Sats struct {
+	Name     string   `json:"name"`
+	Distance float32  `json:"distance"`
+	Message  []string `json:"message"`
+}
+
 type RequestBody struct {
+	Satellites []Sats `json:"satellites"`
+}
+
+/*type RequestBody struct {
 	Satellites []struct {
 		Name     string   `json:"name"`
 		Distance float32  `json:"distance"`
 		Message  []string `json:"message"`
 	} `json:"satellites"`
-}
+}*/
 
 type ResponseBody struct {
 	Position struct {

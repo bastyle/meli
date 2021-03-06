@@ -138,7 +138,7 @@ func GetAllDataSatell() ([]SatEntity, error) {
 	if err != nil {
 		fmt.Println("Got error building expression:")
 		fmt.Println(err.Error())
-		return items, err
+		return items, errors.New("error getting satellites")
 	}
 	params := &dynamodb.ScanInput{
 		ExpressionAttributeNames:  expr.Names(),
@@ -151,7 +151,7 @@ func GetAllDataSatell() ([]SatEntity, error) {
 	if err != nil {
 		fmt.Println("Query API call failed:")
 		fmt.Println((err.Error()))
-		return items, err
+		return items, errors.New("error getting satellites")
 	}
 	num_items := len(result.Items)
 	fmt.Println("cant items:: ", num_items)
@@ -161,7 +161,7 @@ func GetAllDataSatell() ([]SatEntity, error) {
 		if err != nil {
 			fmt.Println("Got error unmarshalling:")
 			fmt.Println(err.Error())
-			return items, err
+			return items, errors.New("error getting satellites")
 		}
 		items = append(items, item)
 	}

@@ -28,28 +28,28 @@ func TestGetAllDataSatell(t *testing.T) {
 	}
 }
 
-func TestUpdateSatellite(t *testing.T) {
+/*func TestUpdateSatellite(t *testing.T) {
 	msg := [1]string{""}
-	if err := UpdateSatellite("kenobi", 0, msg[:]); err != nil {
+	if err := UpdateSatellite("kenobi", 100, msg[:]); err != nil {
 		t.Errorf("Error UpdateSatellite = %v.\n", err)
 	} else {
 		t.Log("satellite updated.")
 	}
-}
+}*/
 
 func TestUpdateFakeSatellite(t *testing.T) {
 	msg := [1]string{""}
-	if err := UpdateSatellite("fakeSatellite", 0, msg[:]); err != nil {
+	if err := UpdateSatellite("fakeSatellite", 100, msg[:]); err != nil {
 		t.Log("satellite dosnt exists.")
 	} else {
 		t.Errorf("Error UpdateSatellite = %v.\n", err)
 	}
 }
 
-func TestResetSatellDynamicData(t *testing.T) {
+/*func TestResetSatellDynamicData(t *testing.T) {
 	if err := ResetSatellDynamicData(); err != nil {
 		t.Errorf("Error ResetSatellDynamicData = %v.\n", err)
 	} else {
 		t.Log("satellites have been updated.")
 	}
-}
+}*/

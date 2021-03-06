@@ -11,6 +11,8 @@ import (
 var topsecretSplitPath = "topsecret_split"
 var topsecretPath = "topsecret"
 
+const satellitesExpected = 3
+
 func handleRequest(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	pathAux := strings.Split(req.Path, "/")[1]
 	fmt.Printf("::::pathAux = %v.\n", pathAux)

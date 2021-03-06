@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  TopSecretSplit:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handler/top-secret-split
+      Runtime: go1.x
+      Tracing: Active
+      Policies: AmazonDynamoDBFullAccess
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret_split
+            Method: get
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret_split/{satellite_name}
+            Method: post
+            RequestParameters:
+              - method.request.path.satellite_name:
+                  Required: true
+  Quasar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handler/quasar
+      Runtime: go1.x
+      Tracing: Active
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret
+            Method: post
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: Satel
+      AttributeDefinitions: 
+        - AttributeName: name
+          AttributeType: S        
+      KeySchema: 
+        - AttributeName: name
+          KeyType: HASH        
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
+Outputs:
+  URL:
+    Description: URL for HTTPS Endpoint
+    Value:
+      Fn::Join:
+        - ''
+        - - https://
+          - Ref: ServerlessRestApi
+          - ".execute-api."
+          - Ref: AWS::Region
+          - ".amazonaws.com/"
+          - Ref: ServerlessRestApiProdStage
