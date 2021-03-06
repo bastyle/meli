@@ -153,8 +153,8 @@ func GetAllDataSatell() ([]SatEntity, error) {
 		fmt.Println((err.Error()))
 		return items, errors.New("error getting satellites")
 	}
-	num_items := len(result.Items)
-	fmt.Println("cant items:: ", num_items)
+	//num_items := len(result.Items)
+	//fmt.Println("cant items:: ", num_items)
 	for _, i := range result.Items {
 		item := SatEntity{}
 		err = dynamodbattribute.UnmarshalMap(i, &item)
