@@ -10,22 +10,23 @@ Repositorio contenedor de la solución para el challenge propuesto por mercado l
 > Rebelde y busca dar un gran golpe contra el Imperio Galáctico para
 > reavivar la llama de la resistencia.
 
-> El servicio de i nteligencia rebelde ha detectado un l lamado de auxilio de
-> una nave portacarga i mperial a l a deriva en un campo de asteroides. El
-> manifiesto de l a nave es ultra clasificado, pero se rumorea que
+> El servicio de inteligencia rebelde ha detectado un llamado de auxilio de
+> una nave portacarga imperial a la deriva en un campo de asteroides. El
+> manifiesto de la nave es ultra clasificado, pero se rumorea que
 > transporta raciones y armamento para una legión entera.
 
 ![mill](./doc/img/mil-falcon.jpg)
 _________________
 ## Análisis del problema
 ### Problema Planteado
-Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 puntos y su distancia hasta el cuarto punto en cuestión. Para resolver este problema, después de mucho buscar por la web terminé estudiando acerca del concepto de trilateración;
+Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 puntos y su distancia hasta el cuarto punto en cuestión. Para resolver este problema, después de mucho buscar por la web terminé documentandome acerca del concepto de trilateración;
 
 *La trilateración es un método matemático para determinar las posiciones relativas de objetos usando la geometría de triángulos de forma análoga la triangulación. A diferencia de esta, que usa medidas de ángulo, la trilateración usa las localizaciones conocidas de dos o más puntos de referencia, y la distancia medida entre el sujeto y cada punto de referencia. Para determinar de forma única y precisa la localización relativa de un punto en un plano bidimensional usando solo trilateración, se necesitan generalmente al menos 3 puntos de referencia.* [ref]( https://amp.blog.buy-es.com/1849965/1/trilateracion.html)
 
+### Ejemplo gráfico
 ![possible example](./doc/img/graphically-possible-example.JPG)
 
-Teniendo claro la forma (fórmula) en que se podía resolver el problema, me puse manos a la obra.
+Teniendo más claridad de cómo resolver el problema, me puse manos a la obra.
 _________________
 ## Diseño de la solución
 
@@ -39,11 +40,11 @@ _________________
 ## Ambientación Local
 
 ### Prerequisitos Generales
-- cuenta activa con privilegios en los servicios aws referenciados en la sección [`Tools Box`](#Tools-Box)
+- contar con una cuenta activa con privilegios en los servicios aws referenciados en la sección [`Tools Box`](#Tools-Box)
 - command line
 - git
 - aws cli
-- go versión >= 1.16
+- go 
 - make command
 - editor de texto o "ide"
 
@@ -51,6 +52,7 @@ _________________
 El archivo [template.yml](./aws-stack/template.yml) contiene la configuración con los recursos del stack aws.
 - AWS::Serverless::Api
 - AWS::Serverless::Function
+- AWS::ApiGateway::UsagePlan
 - AWS::DynamoDB::Table
 - AWS::Cognito::UserPool
 - AWS::Cognito::UserPoolResourceServer
@@ -79,20 +81,33 @@ Para simplificar el trabajo en ambiente local se disponibiliza un MakeFile que a
 
 _________________
 ## Despliegue en AWS
-Antes de la primera ejecución se debe ejecutar el comando **make configure** para crear el bucket que contendrá el archivo comprimido del stack.
-- **make configure** (sólo una única vez)
+
+### comandos para desplegar el stack en aws
+- **make configure** (sólo una única vez y antes del primer despliegue del stack)
 - **make build** 
 - **make package**
 - **make deploy**
 - **put-satellites-into-db** (sólo una única vez y debe ser ejecutado luego de haber desplegado correctamente el stack)
+- **make describe**
 
 _________________
 ## URL API Quasar
+
 ### Postman
 Para probar la API creada se disponibiliza un set de archivos [collection](./postman/) de postman donde se encuentran las peticiones a los distintos endpoints generados.
-Pasos para realizar las pruebas
-Se debe obtener un token
 
+### Pasos para realizar pruebas sobre la API.
+
+- Obtener un token válido a través del _request_ creado bajo la carpeta 'cognito'. Este _request_ ya cuenta con la configuración correspondiente.
+- Agregar el _jwt_ obtenido en el paso anterior en el _header_ 'Authorization' de los _requests_ disponibles en los directorios 'topsecret' & 'topsecret_split'
+- En el archivo de [variables globales](./postman/quasar.postman_globals.json) se encuentra el id de la API generada, el cual es utilizado en los _request_ generados.
+
+![postman](./doc/img/postman-view.JPG)
+
+De igual forma con el comando **make describe** se puede obtener la url de API generada.
+
+https://z7imxrjh6e.execute-api.us-east-2.amazonaws.com/Prod
+_________________
 ## Tools Box
 - golang 1.16
 - make 4.2.1
@@ -111,8 +126,6 @@ Se debe obtener un token
 - visual studio code
 - generador MD online https://dillinger.io/
 - formateador json http://jsonviewer.stack.hu/
-_________________
-## Versión 
 _________________
 ## Autor
 - Bastián Bastías Sánchez, Ingeniero en Informática
