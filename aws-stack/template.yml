@@ -100,6 +100,7 @@ Para probar la API creada se disponibiliza un set de archivos [collection](./pos
 
 - Obtener un token válido a través del _request_ creado bajo la carpeta 'cognito'. Este _request_ ya cuenta con la configuración correspondiente.
 - Agregar el _jwt_ obtenido en el paso anterior en el _header_ 'Authorization' de los _requests_ disponibles en los directorios 'topsecret' & 'topsecret_split'
+- Ejecutar alguno de los _request_.
 - En el archivo de [variables globales](./postman/quasar.postman_globals.json) se encuentra el id de la API generada, el cual es utilizado en los _request_ generados.
 
 ![postman](./doc/img/postman-view.JPG)
