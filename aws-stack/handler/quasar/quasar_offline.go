@@ -63,7 +63,6 @@ func HandleGetOffLineRequest(req events.APIGatewayProxyRequest) (events.APIGatew
 
 //function tah validates the information of the satllites in the db
 func IsThereNecessaryInfo(satellites []SatEntity) (bool, RequestBody) {
-	//TODO tengo que armar un objeto del tipo RequestBody y enviarlo a la funcion ProcessRequest de la version online
 	reqBodyStruct := RequestBody{}
 	fmt.Printf("reqBodyStruct: %v \n", reqBodyStruct)
 	for _, s := range satellites {

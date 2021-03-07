@@ -13,7 +13,6 @@ type Satellite struct {
 	name string
 }
 
-//TODO agregar valores de inicio a archivo de propiedades posiblemente modicable por un mantenedor
 var kenobiSat = Satellite{
 	x: -500,
 	y: -200,

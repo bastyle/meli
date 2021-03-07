@@ -127,6 +127,10 @@ _________________
 - generador MD online https://dillinger.io/
 - formateador json http://jsonviewer.stack.hu/
 _________________
+## TODO
+- Agregar swagger al proyecto
+
+_________________
 ## Autor
 - Bastián Bastías Sánchez, Ingeniero en Informática
 _________________
