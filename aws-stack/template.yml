@@ -57,18 +57,14 @@ Resources:
       UserPoolId: !Ref MeliCognitoUserPool
   MeliClientApp:
     Type: AWS::Cognito::UserPoolClient
+    DependsOn: MeliResourceService
     Properties: 
       UserPoolId: !Ref MeliCognitoUserPool
       AllowedOAuthFlows:
         - client_credentials
-      #ClientName: challenge-meli-client-app
-      ClientName: 
-        Fn::Join: 
-          -''
-          - - !Ref MeliCognitoUserPool
-            - "-app"
+      ClientName: challenge-meli-client-app
       GenerateSecret: true
-      AllowedOAuthScopes: 
+      AllowedOAuthScopes:
         - challenge-meli-rs/post
       AllowedOAuthFlowsUserPoolClient: true
   MeliDomain:
