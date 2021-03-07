@@ -23,10 +23,16 @@ Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 
 
 *La trilateración es un método matemático para determinar las posiciones relativas de objetos usando la geometría de triángulos de forma análoga la triangulación. A diferencia de esta, que usa medidas de ángulo, la trilateración usa las localizaciones conocidas de dos o más puntos de referencia, y la distancia medida entre el sujeto y cada punto de referencia. Para determinar de forma única y precisa la localización relativa de un punto en un plano bidimensional usando solo trilateración, se necesitan generalmente al menos 3 puntos de referencia.* [ref]( https://amp.blog.buy-es.com/1849965/1/trilateracion.html)
 
+[![possible example](./doc/img/graphically-possible-example.JPG)]
+
 Teniendo claro la forma (fórmula) en que se podía resolver el problema, me puse manos a la obra.
 
 ## Diseño de la solución
-- Diagrama despliegue/componentes
+[![deploy diagram](./doc/img/challenge-meli-aws-deploy-diagram.png)]
+
+[![sequence diagram](./doc/img/challenge-meli-sequence.png)]
+
+
 ## Prerequisitos
 - cuenta activa en aws 
 - aws cli
