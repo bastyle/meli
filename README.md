@@ -18,7 +18,7 @@ Repositorio contenedor de la solución para el challenge propuesto por mercado l
 ![mill](./doc/img/mil-falcon.jpg)
 _________________
 ## Análisis del problema
-### Problema Base
+### Problema Planteado
 Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 puntos y su distancia hasta el cuarto punto en cuestión. Para resolver este problema, después de mucho buscar por la web terminé estudiando acerca del concepto de trilateración;
 
 *La trilateración es un método matemático para determinar las posiciones relativas de objetos usando la geometría de triángulos de forma análoga la triangulación. A diferencia de esta, que usa medidas de ángulo, la trilateración usa las localizaciones conocidas de dos o más puntos de referencia, y la distancia medida entre el sujeto y cada punto de referencia. Para determinar de forma única y precisa la localización relativa de un punto en un plano bidimensional usando solo trilateración, se necesitan generalmente al menos 3 puntos de referencia.* [ref]( https://amp.blog.buy-es.com/1849965/1/trilateracion.html)
@@ -47,35 +47,57 @@ _________________
 - make command
 - editor de texto o "ide"
 
-### Archivo de configuración ambiente local **.env**
-`AWS_ACCOUNT_ID=id cuenta aws a utilizar`
-`AWS_BUCKET_NAME=nombre del bucket s3 a utilizar para los despliegues`
-`AWS_STACK_NAME=nombre del stack`
-`AWS_REGION=región donde se instalarán los artefactos`
+### Template de despliegue de configuración 
+El archivo [template.yml](./aws-stack/template.yml) contiene la configuración con los recursos del stack aws.
+- AWS::Serverless::Api
+- AWS::Serverless::Function
+- AWS::DynamoDB::Table
+- AWS::Cognito::UserPool
+- AWS::Cognito::UserPoolResourceServer
+- AWS::Cognito::UserPoolClient
+- AWS::Cognito::UserPoolDomain
 
+### Archivo de configuración 
+El archivo [.env](ws-stack/.env) contiene las propiedades a utilizar en el despligue del stack aws
+
+- `AWS_ACCOUNT_ID=id cuenta aws a utilizar`
+- `AWS_BUCKET_NAME=nombre del bucket s3 a utilizar para los despliegues`
+- `AWS_STACK_NAME=nombre del stack`
+- `AWS_REGION=región donde se instalarán los artefactos`
 
 ### Comandos de ayuda
 Para simplificar el trabajo en ambiente local se disponibiliza un MakeFile que apoya con la ejecución de comandos;
 - **make clean** (limpia directorio dist)
 - **make build** (_clean_ + go build)
 - **make install** (instala dependencias)
-- **configure** (creación del bucket en s3 que contendrá el zip del código a desplegar)
-- **make test** (ejecuta pruebas unitarias)
+- **make configure** (creación del bucket en s3 que contendrá el zip del código a desplegar)
+- **make test** (ejecución de pruebas unitarias) _algunos test requieren que el stack esté desplegado_
 - **make put-satellites-into-db** (inserta los 3 registros correspondiente a los satellites en dynamodb)
 - **make package** (_build_ + cloudformation package)
-- make test
-- make package
 - **make deploy** (cloudformation deploy)
+- **make describe** (cloudformation describe stack)
 
+_________________
+## Despliegue en AWS
+Antes de la primera ejecución se debe ejecutar el comando **make configure** para crear el bucket que contendrá el archivo comprimido del stack.
+- **make configure** (sólo una única vez)
+- **make build** 
+- **make package**
+- **make deploy**
+- **put-satellites-into-db** (sólo una única vez y debe ser ejecutado luego de haber desplegado correctamente el stack)
 
-## Despliegue
-
+_________________
+## URL API Quasar
+### Postman
+Para probar la API creada se disponibiliza un set de archivos [collection](./postman/) de postman donde se encuentran las peticiones a los distintos endpoints generados.
+Pasos para realizar las pruebas
+Se debe obtener un token
 
 ## Tools Box
 - golang 1.16
-- make
-- aws 
-    - cli
+- make 4.2.1
+- aws cli 1.18.69
+- aws
     - sam
     - lambda
     - api gateway
@@ -87,18 +109,14 @@ Para simplificar el trabajo en ambiente local se disponibiliza un MakeFile que a
 - curl
 - postman
 - visual studio code
-- generador MD https://dillinger.io/
+- generador MD online https://dillinger.io/
 - formateador json http://jsonviewer.stack.hu/
-
-## Documento con el detalle del challenge 
-
+_________________
 ## Versión 
-
-## code
+_________________
 ## Autor
 - Bastián Bastías Sánchez, Ingeniero en Informática
-
-
+_________________
 ### Referencias
 - https://www.physicsforums.com/threads/how-to-calculate-2d-trilateration-step-by-step.874246/
 - https://intellipaat.com/community/14464/2d-trilateration
