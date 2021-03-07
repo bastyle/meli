@@ -14,23 +14,24 @@ Resources:
             UserPoolArn: !GetAtt MeliCognitoUserPool.Arn
             AuthorizationScopes:
               - challenge-meli-rs/post
-  QuasarFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: dist/handler/cognito
-      Runtime: go1.x
-      Tracing: Active
-      Policies: 
-        - DynamoDBCrudPolicy:
-             TableName: !Ref DynamoDBTable
-      Events:
-        Root:
-          Type: Api
-          Properties:
-            RestApiId: !Ref QuasarApi
-            Path: /cognito
-            Method: GET
-  TopSecretSplit:
+#  QuasarFunction:
+#    Type: AWS::Serverless::Function
+#    Properties:
+#      Handler: dist/handler/cognito
+#      Runtime: go1.x
+#      Tracing: Active
+#      Policies: 
+#        - DynamoDBCrudPolicy:
+#             TableName: !Ref DynamoDBTable
+#      Events:
+#        Root:
+#          Type: Api
+#          Properties:
+#            RestApiId: !Ref QuasarApi
+#            Path: /cognito
+#            Method: GET
+#################            
+  TopSecretFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: dist/handler/quasar
@@ -40,14 +41,16 @@ Resources:
         - DynamoDBCrudPolicy:
              TableName: !Ref DynamoDBTable
       Events:
-        GetEvent:
+        GetOfflineEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref QuasarApi
             Path: /topsecret_split
             Method: get
-        PostEvent:
+        PostOfflineEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref QuasarApi
             Path: /topsecret_split/{satellite_name}
             Method: post
             RequestParameters:
@@ -56,6 +59,7 @@ Resources:
         PostOnlineEvent:
           Type: Api
           Properties:
+            RestApiId: !Ref QuasarApi
             Path: /topsecret
             Method: post
   DynamoDBTable:
