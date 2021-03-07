@@ -3,6 +3,7 @@ Transform: AWS::Serverless-2016-10-31
 Resources:
   QuasarApi:
     Type: AWS::Serverless::Api
+    DependsOn: MeliResourceService
     Properties:
       StageName: Prod
       Cors: "'*'"
@@ -11,6 +12,8 @@ Resources:
         Authorizers:
           MyCognitoAuthorizer:
             UserPoolArn: !GetAtt MeliCognitoUserPool.Arn
+            AuthorizationScopes:
+              - challenge-meli-rs/post
   QuasarFunction:
     Type: AWS::Serverless::Function
     Properties:
