@@ -15,41 +15,61 @@ Repositorio contenedor de la solución para el challenge propuesto por mercado l
 > manifiesto de l a nave es ultra clasificado, pero se rumorea que
 > transporta raciones y armamento para una legión entera.
 
-![sky](https://media.contentapi.ea.com/content/dam/star-wars-battlefront-2/images/2019/08/swbf2-refresh-hero-large-heroes-page-luke-skywalker-16x9-xl.jpg.adapt.crop1x1.320w.jpg)
-
+![mill](./doc/img/mil-falcon.jpg)
+_________________
 ## Análisis del problema
 ### Problema Base
 Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 puntos y su distancia hasta el cuarto punto en cuestión. Para resolver este problema, después de mucho buscar por la web terminé estudiando acerca del concepto de trilateración;
 
 *La trilateración es un método matemático para determinar las posiciones relativas de objetos usando la geometría de triángulos de forma análoga la triangulación. A diferencia de esta, que usa medidas de ángulo, la trilateración usa las localizaciones conocidas de dos o más puntos de referencia, y la distancia medida entre el sujeto y cada punto de referencia. Para determinar de forma única y precisa la localización relativa de un punto en un plano bidimensional usando solo trilateración, se necesitan generalmente al menos 3 puntos de referencia.* [ref]( https://amp.blog.buy-es.com/1849965/1/trilateracion.html)
 
-[![possible example](./doc/img/graphically-possible-example.JPG)]
+![possible example](./doc/img/graphically-possible-example.JPG)
 
 Teniendo claro la forma (fórmula) en que se podía resolver el problema, me puse manos a la obra.
-
+_________________
 ## Diseño de la solución
+
 ### Diagrama de despliegue
 ![deploy diagram](./doc/img/challenge-meli-aws-deploy-diagram.png)
 
 ### Diagrama de secuencia
 ![sequence diagram](./doc/img/challenge-meli-sequence.png)
 
+_________________
+## Ambientación Local
 
-## Prerequisitos
-- cuenta activa en aws 
+### Prerequisitos Generales
+- cuenta activa con privilegios en los servicios aws referenciados en la sección [`Tools Box`](#Tools-Box)
+- command line
+- git
 - aws cli
-- go 1.16
-- make
-- editor de texto o "ide" como visual studio code
+- go versión >= 1.16
+- make command
+- editor de texto o "ide"
 
-## Ambiente local
-- .env file
+### Archivo de configuración ambiente local **.env**
+`AWS_ACCOUNT_ID=id cuenta aws a utilizar`
+`AWS_BUCKET_NAME=nombre del bucket s3 a utilizar para los despliegues`
+`AWS_STACK_NAME=nombre del stack`
+`AWS_REGION=región donde se instalarán los artefactos`
 
 
-## Ejecución de Pruebas Unitarias
+### Comandos de ayuda
+Para simplificar el trabajo en ambiente local se disponibiliza un MakeFile que apoya con la ejecución de comandos;
+- **make clean** (limpia directorio dist)
+- **make build** (_clean_ + go build)
+- **make install** (instala dependencias)
+- **configure** (creación del bucket en s3 que contendrá el zip del código a desplegar)
+- **make test** (ejecuta pruebas unitarias)
+- **make put-satellites-into-db** (inserta los 3 registros correspondiente a los satellites en dynamodb)
+- **make package** (_build_ + cloudformation package)
 - make test
+- make package
+- **make deploy** (cloudformation deploy)
+
 
 ## Despliegue
+
 
 ## Tools Box
 - golang 1.16
@@ -67,8 +87,6 @@ Teniendo claro la forma (fórmula) en que se podía resolver el problema, me pus
 - curl
 - postman
 - visual studio code
-- win 10
-- ubuntu 12.04
 - generador MD https://dillinger.io/
 - formateador json http://jsonviewer.stack.hu/
 
@@ -76,6 +94,7 @@ Teniendo claro la forma (fórmula) en que se podía resolver el problema, me pus
 
 ## Versión 
 
+## code
 ## Autor
 - Bastián Bastías Sánchez, Ingeniero en Informática
 
