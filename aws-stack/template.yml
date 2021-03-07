@@ -14,6 +14,18 @@ Resources:
             UserPoolArn: !GetAtt MeliCognitoUserPool.Arn
             AuthorizationScopes:
               - challenge-meli-rs/post
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          Description: Usage plan for this API
+          Quota:
+            Limit: 500
+            Period: MONTH
+          Throttle:
+            BurstLimit: 100
+            RateLimit: 50
+          Tags:
+            - Key: reason
+              Value: pricing
 #  QuasarFunction:
 #    Type: AWS::Serverless::Function
 #    Properties:
@@ -113,8 +125,8 @@ Outputs:
       Fn::Join:
         - ''
         - - https://
-          - Ref: ServerlessRestApi
+          - Ref: QuasarApi
           - ".execute-api."
           - Ref: AWS::Region
           - ".amazonaws.com/"
-          - Ref: ServerlessRestApiProdStage
+          - Ref: QuasarApiProdStage
