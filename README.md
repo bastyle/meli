@@ -15,7 +15,7 @@ Repositorio contenedor de la solución para el challenge propuesto por mercado l
 > manifiesto de l a nave es ultra clasificado, pero se rumorea que
 > transporta raciones y armamento para una legión entera.
 
-[![sky](https://media.contentapi.ea.com/content/dam/star-wars-battlefront-2/images/2019/08/swbf2-refresh-hero-large-heroes-page-luke-skywalker-16x9-xl.jpg.adapt.crop1x1.320w.jpg)]
+![sky](https://media.contentapi.ea.com/content/dam/star-wars-battlefront-2/images/2019/08/swbf2-refresh-hero-large-heroes-page-luke-skywalker-16x9-xl.jpg.adapt.crop1x1.320w.jpg)
 
 ## Análisis del problema
 ### Problema Base
@@ -28,9 +28,11 @@ Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 
 Teniendo claro la forma (fórmula) en que se podía resolver el problema, me puse manos a la obra.
 
 ## Diseño de la solución
-[![deploy diagram](./doc/img/challenge-meli-aws-deploy-diagram.png)]
+### Diagrama de despliegue
+![deploy diagram](./doc/img/challenge-meli-aws-deploy-diagram.png)
 
-[![sequence diagram](./doc/img/challenge-meli-sequence.png)]
+### Diagrama de secuencia
+![sequence diagram](./doc/img/challenge-meli-sequence.png)
 
 
 ## Prerequisitos
