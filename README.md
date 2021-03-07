@@ -1,7 +1,10 @@
+
+
 # Meli Quasar Challenge
 ## Operación Fuego de Quasar
-Repositorio que contiene la solución para el challenge propuesto por mercado libre denominado Operación Fuego de Quasar.
-TODO agregar link a pdf
+Repositorio contenedor de la solución para el challenge propuesto por mercado libre denominado 
+[Operación Fuego de Quasar.](https://github.com/bbasstyle/meli/blob/main/doc/backend-operacion-fuego-de-quasar.pdf)
+
 
 > Han Solo ha sido recientemente nombrado General de l a Alianza
 > Rebelde y busca dar un gran golpe contra el Imperio Galáctico para
@@ -14,32 +17,13 @@ TODO agregar link a pdf
 
 [![sky](https://media.contentapi.ea.com/content/dam/star-wars-battlefront-2/images/2019/08/swbf2-refresh-hero-large-heroes-page-luke-skywalker-16x9-xl.jpg.adapt.crop1x1.320w.jpg)]
 
-## Prerequisitos
-- cuenta activa en aws 
-- aws cli
-- go 1.16
-- make
-- editor de texto o "ide" como visual studio code
+## Análisis del problema
+### Problema Base
+Obtener la ubicación de un punto desconocido teniendo la ubicación de otros 3 puntos y su distancia hasta el cuarto punto en cuestión. Para resolver este problema, después de mucho buscar por la web terminé estudiando acerca del concepto de trilateración;
 
+*La trilateración es un método matemático para determinar las posiciones relativas de objetos usando la geometría de triángulos de forma análoga la triangulación. A diferencia de esta, que usa medidas de ángulo, la trilateración usa las localizaciones conocidas de dos o más puntos de referencia, y la distancia medida entre el sujeto y cada punto de referencia. Para determinar de forma única y precisa la localización relativa de un punto en un plano bidimensional usando solo trilateración, se necesitan generalmente al menos 3 puntos de referencia.* [ref]( https://amp.blog.buy-es.com/1849965/1/trilateracion.html)
 
-
-# Meli Quasar Challenge
-## Operación Fuego de Quasar
-Repositorio que contiene la solución para el challenge propuesto por mercado libre denominado Operación Fuego de Quasar.
-TODO agregar link a pdf
-
-> Han Solo ha sido recientemente nombrado General de l a Alianza
-> Rebelde y busca dar un gran golpe contra el Imperio Galáctico para
-> reavivar la llama de la resistencia.
-
-> El servicio de i nteligencia rebelde ha detectado un l lamado de auxilio de
-> una nave portacarga i mperial a l a deriva en un campo de asteroides. El
-> manifiesto de l a nave es ultra clasificado, pero se rumorea que
-> transporta raciones y armamento para una legión entera.
-
-[![sky](https://media.contentapi.ea.com/content/dam/star-wars-battlefront-2/images/2019/08/swbf2-refresh-hero-large-heroes-page-luke-skywalker-16x9-xl.jpg.adapt.crop1x1.320w.jpg)]
-
-### TODO, AGREGAR MAS CONTEXTO AL PROBLEMA PLANTEADO ###
+Teniendo claro la forma (fórmula) en que se podía resolver el problema, me puse manos a la obra.
 
 ## Diseño de la solución
 - Diagrama despliegue/componentes
