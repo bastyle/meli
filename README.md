@@ -58,7 +58,7 @@ El archivo [template.yml](./aws-stack/template.yml) contiene la configuración c
 - AWS::Cognito::UserPoolDomain
 
 ### Archivo de configuración 
-El archivo [.env](./ws-stack/.env) contiene las propiedades a utilizar en el despligue del stack aws
+El archivo [.env](./aws-stack/.env) contiene las propiedades a utilizar en el despligue del stack aws
 
 - `AWS_ACCOUNT_ID=id cuenta aws a utilizar`
 - `AWS_BUCKET_NAME=nombre del bucket s3 a utilizar para los despliegues`
