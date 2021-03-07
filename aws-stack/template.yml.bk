@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  TopSecretSplit:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handler/quasar
+      Runtime: go1.x
+      Tracing: Active
+      Policies: 
+        - DynamoDBCrudPolicy:
+             TableName: !Ref DynamoDBTable
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret_split
+            Method: get
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret_split/{satellite_name}
+            Method: post
+            RequestParameters:
+              - method.request.path.satellite_name:
+                  Required: true
+        PostOnlineEvent:
+          Type: Api
+          Properties:
+            Path: /topsecret
+            Method: post
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: Satel
+      AttributeDefinitions: 
+        - AttributeName: name
+          AttributeType: S        
+      KeySchema: 
+        - AttributeName: name
+          KeyType: HASH        
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 3
+        WriteCapacityUnits: 3
+  MeliCognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: challenge-meli-up
+  MeliResourceService:
+    Type: AWS::Cognito::UserPoolResourceServer
+    Properties: 
+      Identifier: challenge-meli-rs
+      Name: challenge-meli-rs
+      Scopes: 
+        - ScopeName: "post" 
+          ScopeDescription: "post_tx" 
+      UserPoolId: !Ref MeliCognitoUserPool
+  MeliClientApp:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn: MeliResourceService
+    Properties: 
+      UserPoolId: !Ref MeliCognitoUserPool
+      AllowedOAuthFlows:
+        - client_credentials
+      ClientName: challenge-meli-client-app
+      GenerateSecret: true
+      AllowedOAuthScopes:
+        - challenge-meli-rs/post
+      AllowedOAuthFlowsUserPoolClient: true
+  MeliDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties: 
+      Domain: bastian2323
+      UserPoolId: !Ref MeliCognitoUserPool
+
+Outputs:
+  URL:
+    Description: URL for HTTPS Endpoint
+    Value:
+      Fn::Join:
+        - ''
+        - - https://
+          - Ref: ServerlessRestApi
+          - ".execute-api."
+          - Ref: AWS::Region
+          - ".amazonaws.com/"
+          - Ref: ServerlessRestApiProdStage
