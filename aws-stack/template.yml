@@ -25,24 +25,7 @@ Resources:
             RateLimit: 50
           Tags:
             - Key: reason
-              Value: pricing
-#  QuasarFunction:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Handler: dist/handler/cognito
-#      Runtime: go1.x
-#      Tracing: Active
-#      Policies: 
-#        - DynamoDBCrudPolicy:
-#             TableName: !Ref DynamoDBTable
-#      Events:
-#        Root:
-#          Type: Api
-#          Properties:
-#            RestApiId: !Ref QuasarApi
-#            Path: /cognito
-#            Method: GET
-#################            
+              Value: pricing           
   TopSecretFunction:
     Type: AWS::Serverless::Function
     Properties:
