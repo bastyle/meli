@@ -1,6 +1,36 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 Resources:
+  QuasarApi:
+    Type: AWS::Serverless::Api
+    DependsOn: MeliResourceService
+    Properties:
+      StageName: Prod
+      Cors: "'*'"
+      Auth:
+        DefaultAuthorizer: MyCognitoAuthorizer
+        Authorizers:
+          MyCognitoAuthorizer:
+            UserPoolArn: !GetAtt MeliCognitoUserPool.Arn
+            AuthorizationScopes:
+              - challenge-meli-rs/post
+  QuasarFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: dist/handler/cognito
+      Runtime: go1.x
+      Tracing: Active
+      Policies: 
+        - DynamoDBCrudPolicy:
+             TableName: !Ref DynamoDBTable
+      Events:
+        Root:
+          Type: Api
+          Properties:
+            RestApiId: !Ref QuasarApi
+            Path: /cognito
+            Method: GET
+#################            
   TopSecretSplit:
     Type: AWS::Serverless::Function
     Properties:

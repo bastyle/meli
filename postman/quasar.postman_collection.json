@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "6522f355-f8ee-4e6c-b67c-a9731f48e1b5",
+		"name": "quasar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "topsecret_aplit",
+			"item": [
+				{
+					"name": "topsecret_split",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJORzVDd2p3cGlpQjloNkhoRmw5OU95OUNTUjdoTW9BV3ppRHdyY3NCblhNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2MW4wcXFsZHV1b2U5bnY4b3B0MTlsbGRuNyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiY2hhbGxlbmdlLW1lbGktcnNcL3Bvc3QiLCJhdXRoX3RpbWUiOjE2MTUwODA3MDYsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0yX2ZwQnBwN01WZiIsImV4cCI6MTYxNTA4NDMwNiwiaWF0IjoxNjE1MDgwNzA2LCJ2ZXJzaW9uIjoyLCJqdGkiOiIwMzFlN2E0My1iYzRkLTQ5YTUtYmRmMi05NjAyZWZiNzRkOTAiLCJjbGllbnRfaWQiOiI2MW4wcXFsZHV1b2U5bnY4b3B0MTlsbGRuNyJ9.2s2z0NE7VyA47m_SFp_vD3Cx9nbKLpdvtEoP8awefrTtAnBlQc00KYgPRMgyCkhb4IrglqS5Jr4jJsD4BVWMhcf4UobfMWlNvEVv9zn9WgI4myBCL3WcmnO4EgS8umIj6txrBdWV5tIk9yn3RVcjEHbnfOnsErrOX8eXsiWF6O645ENHwRMWGgosNPHQMwE48DmAQNiC_1YaiuNqGck8Aaf42y-kC1Bv4Eu64dZ8NKsGhn7UCPHrELSvz8t6CLfcDd8KdljLqgK80G0NXiBLvLNv7KK65f5M9hZGuvhNSwTJ8qJI3jEFWDZQJrDia_7Deqrzanm-4iPZzklcUZ5UWA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"distance\":670.82,\"message\":[\"este\",\"\",\"un\",\"mensaje\",\"\"]}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/Prod/topsecret_split/sato",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"topsecret_split",
+								"sato"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "topsecret_split",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJORzVDd2p3cGlpQjloNkhoRmw5OU95OUNTUjdoTW9BV3ppRHdyY3NCblhNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2MW4wcXFsZHV1b2U5bnY4b3B0MTlsbGRuNyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiY2hhbGxlbmdlLW1lbGktcnNcL3Bvc3QiLCJhdXRoX3RpbWUiOjE2MTUwODA3MDYsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0yX2ZwQnBwN01WZiIsImV4cCI6MTYxNTA4NDMwNiwiaWF0IjoxNjE1MDgwNzA2LCJ2ZXJzaW9uIjoyLCJqdGkiOiIwMzFlN2E0My1iYzRkLTQ5YTUtYmRmMi05NjAyZWZiNzRkOTAiLCJjbGllbnRfaWQiOiI2MW4wcXFsZHV1b2U5bnY4b3B0MTlsbGRuNyJ9.2s2z0NE7VyA47m_SFp_vD3Cx9nbKLpdvtEoP8awefrTtAnBlQc00KYgPRMgyCkhb4IrglqS5Jr4jJsD4BVWMhcf4UobfMWlNvEVv9zn9WgI4myBCL3WcmnO4EgS8umIj6txrBdWV5tIk9yn3RVcjEHbnfOnsErrOX8eXsiWF6O645ENHwRMWGgosNPHQMwE48DmAQNiC_1YaiuNqGck8Aaf42y-kC1Bv4Eu64dZ8NKsGhn7UCPHrELSvz8t6CLfcDd8KdljLqgK80G0NXiBLvLNv7KK65f5M9hZGuvhNSwTJ8qJI3jEFWDZQJrDia_7Deqrzanm-4iPZzklcUZ5UWA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/Prod/topsecret_split",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"topsecret_split"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "topsecret",
+			"item": [
+				{
+					"name": "topsecret",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJraWQiOiJORzVDd2p3cGlpQjloNkhoRmw5OU95OUNTUjdoTW9BV3ppRHdyY3NCblhNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2MW4wcXFsZHV1b2U5bnY4b3B0MTlsbGRuNyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiY2hhbGxlbmdlLW1lbGktcnNcL3Bvc3QiLCJhdXRoX3RpbWUiOjE2MTUwODA3MDYsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0yX2ZwQnBwN01WZiIsImV4cCI6MTYxNTA4NDMwNiwiaWF0IjoxNjE1MDgwNzA2LCJ2ZXJzaW9uIjoyLCJqdGkiOiIwMzFlN2E0My1iYzRkLTQ5YTUtYmRmMi05NjAyZWZiNzRkOTAiLCJjbGllbnRfaWQiOiI2MW4wcXFsZHV1b2U5bnY4b3B0MTlsbGRuNyJ9.2s2z0NE7VyA47m_SFp_vD3Cx9nbKLpdvtEoP8awefrTtAnBlQc00KYgPRMgyCkhb4IrglqS5Jr4jJsD4BVWMhcf4UobfMWlNvEVv9zn9WgI4myBCL3WcmnO4EgS8umIj6txrBdWV5tIk9yn3RVcjEHbnfOnsErrOX8eXsiWF6O645ENHwRMWGgosNPHQMwE48DmAQNiC_1YaiuNqGck8Aaf42y-kC1Bv4Eu64dZ8NKsGhn7UCPHrELSvz8t6CLfcDd8KdljLqgK80G0NXiBLvLNv7KK65f5M9hZGuvhNSwTJ8qJI3jEFWDZQJrDia_7Deqrzanm-4iPZzklcUZ5UWA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"satellites\": [\r\n        {\r\n            \"name\": \"kenobi\",\r\n            \"distance\": 100.0,\r\n            \"message\": [\r\n                \"este\",\r\n                \"\",\r\n                \"\",\r\n                \"mensaje\",\r\n                \"\",\r\n                \"\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"skywalker\",\r\n            \"distance\": 115.5,\r\n            \"message\": [\r\n                \"\",\r\n                \"es\",\r\n                \"\",\r\n                \"\",\r\n                \"secreto\",\r\n                \"ademas\"\r\n            ]\r\n        },\r\n        {\r\n            \"name\": \"sato\",\r\n            \"distance\": 142.7,\r\n            \"message\": [\r\n                \"este\",\r\n                \"\",\r\n                \"un\",\r\n                \"\",\r\n                \"\",\r\n                \"\"\r\n            ]\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-2.amazonaws.com/Prod/topsecret",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"Prod",
+								"topsecret"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cognito",
+			"item": [
+				{
+					"name": "get-jwt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsondata = JSON.parse(responseBody);",
+									"pm.environment.set(\"idtoken\",\"Bearer \" +jsondata.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "Basic NjFuMHFxbGR1dW9lOW52OG9wdDE5bGxkbjc6M28xMTVwZG05OWZmY241a2c4N3JkaGNwcDNhZGpsMDJodThzazBlYTNtcm9tNGhhbzJo"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://bastian2323.auth.us-east-2.amazoncognito.com/oauth2/token",
+							"protocol": "https",
+							"host": [
+								"bastian2323",
+								"auth",
+								"us-east-2",
+								"amazoncognito",
+								"com"
+							],
+							"path": [
+								"oauth2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
