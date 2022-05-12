@@ -132,7 +132,7 @@ _________________
 
 _________________
 ## Autor
-- Bastián Bastías Sánchez, Ingeniero en Informática
+- Bastián Bastías Sánchez, Software Architect.
 _________________
 ### Referencias
 - https://www.physicsforums.com/threads/how-to-calculate-2d-trilateration-step-by-step.874246/
